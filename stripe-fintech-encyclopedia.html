@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stripe — Global Fintech Encyclopedia</title>
+<style>
+  :root{
+    --ink:#0a2540;
+    --paper:#f6f9fc;
+    --violet:#635bff;
+    --violet-deep:#4a3ff0;
+    --line:#d8e0ea;
+    --mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+    --sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--sans);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.55;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:linear-gradient(160deg,#0a2540 0%, #0f1f3d 45%, #1a1147 100%);
+    color:#fff;
+    padding:64px 24px 56px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      repeating-linear-gradient(115deg, rgba(99,91,255,0.16) 0px, rgba(99,91,255,0.16) 2px, transparent 2px, transparent 46px);
+    opacity:.8;
+    pointer-events:none;
+  }
+  .hero-inner{position:relative; max-width:720px; margin:0 auto;}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:#a99bff;
+    margin-bottom:18px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .eyebrow::before{content:"//"; color:#635bff;}
+  h1.wordmark{
+    font-size:clamp(48px, 13vw, 84px);
+    font-weight:700;
+    letter-spacing:-0.02em;
+    line-height:0.95;
+    margin-bottom:14px;
+  }
+  .tagline{
+    font-size:clamp(16px, 4vw, 20px);
+    color:#c7d0e0;
+    max-width:520px;
+    margin-bottom:36px;
+    font-weight:400;
+  }
+
+  /* terminal snippet */
+  .terminal{
+    background:#0d1424;
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:10px;
+    box-shadow:0 20px 50px -20px rgba(0,0,0,0.6);
+    overflow:hidden;
+    max-width:460px;
+  }
+  .terminal-bar{
+    display:flex; gap:6px;
+    padding:10px 14px;
+    background:rgba(255,255,255,0.03);
+    border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  .dot{width:9px; height:9px; border-radius:50%;}
+  .dot:nth-child(1){background:#ff5f57;}
+  .dot:nth-child(2){background:#febc2e;}
+  .dot:nth-child(3){background:#28c840;}
+  .terminal pre{
+    font-family:var(--mono);
+    font-size:13px;
+    padding:18px 16px;
+    color:#c9d6f0;
+    overflow-x:auto;
+    white-space:pre;
+  }
+  .terminal .kw{color:#a99bff;}
+  .terminal .str{color:#7ee7c7;}
+  .terminal .cmt{color:#5c6b8a;}
+
+  .hero-stats{
+    display:flex; flex-wrap:wrap; gap:28px;
+    margin-top:38px;
+    font-family:var(--mono);
+  }
+  .hero-stats div{min-width:110px;}
+  .hero-stats .num{font-size:22px; font-weight:600; color:#fff;}
+  .hero-stats .lbl{font-size:11px; color:#8a97b8; text-transform:uppercase; letter-spacing:.06em;}
+
+  /* ---------- MAIN ---------- */
+  main{max-width:720px; margin:0 auto; padding:0 24px;}
+
+  .section{
+    padding:52px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .section:last-of-type{border-bottom:none;}
+
+  .section-tag{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--violet-deep);
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    margin-bottom:10px;
+  }
+  .section h2{
+    font-size:clamp(24px,6vw,32px);
+    font-weight:700;
+    letter-spacing:-0.01em;
+    margin-bottom:20px;
+    color:var(--ink);
+  }
+  .section p{
+    font-size:16px;
+    color:#334361;
+    margin-bottom:14px;
+    max-width:60ch;
+  }
+  .section p:last-child{margin-bottom:0;}
+  .section strong{color:var(--ink); font-weight:600;}
+
+  .pull{
+    border-left:3px solid var(--violet);
+    padding-left:16px;
+    margin:20px 0;
+    font-size:15px;
+    color:#4a5878;
+    font-style:italic;
+  }
+
+  /* business model grid */
+  .model-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top:22px;
+  }
+  .model-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:16px;
+  }
+  .model-card .who{
+    font-family:var(--mono);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--violet-deep);
+    margin-bottom:6px;
+  }
+  .model-card .what{font-size:14.5px; color:#334361;}
+
+  /* scale numbers */
+  .scale-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px 16px;
+    margin:26px 0;
+  }
+  .scale-item .num{
+    font-family:var(--mono);
+    font-size:clamp(22px,6vw,30px);
+    font-weight:600;
+    color:var(--violet-deep);
+    line-height:1;
+  }
+  .scale-item .lbl{
+    font-size:12.5px;
+    color:#5c6b8a;
+    margin-top:6px;
+  }
+
+  /* status */
+  .status-badge{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--mono);
+    font-size:13px;
+    background:#eef0ff;
+    color:var(--violet-deep);
+    border:1px solid #d6d3ff;
+    border-radius:999px;
+    padding:6px 14px;
+    margin-bottom:18px;
+  }
+  .status-badge .pulse{
+    width:8px; height:8px; border-radius:50%;
+    background:#28c840;
+    box-shadow:0 0 0 0 rgba(40,200,64,0.5);
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(40,200,64,0.45);}
+    70%{box-shadow:0 0 0 8px rgba(40,200,64,0);}
+    100%{box-shadow:0 0 0 0 rgba(40,200,64,0);}
+  }
+
+  .valuation-track{
+    display:flex; align-items:flex-end; gap:10px;
+    height:110px;
+    margin:26px 0 8px;
+    padding:0 2px;
+  }
+  .vbar{
+    flex:1;
+    background:linear-gradient(180deg, var(--violet), var(--violet-deep));
+    border-radius:5px 5px 2px 2px;
+    position:relative;
+    min-width:0;
+  }
+  .vbar span{
+    position:absolute; top:-20px; left:0; right:0;
+    text-align:center;
+    font-family:var(--mono);
+    font-size:10px;
+    color:#5c6b8a;
+  }
+  .vbar em{
+    position:absolute; bottom:-20px; left:0; right:0;
+    text-align:center;
+    font-style:normal;
+    font-size:10px;
+    color:#8a97b8;
+  }
+
+  footer{
+    background:var(--ink);
+    color:#c7d0e0;
+    padding:44px 24px 36px;
+    margin-top:8px;
+  }
+  .footer-inner{max-width:720px; margin:0 auto;}
+  footer h3{color:#fff; font-size:15px; margin-bottom:10px; font-family:var(--mono);}
+  footer p{font-size:13.5px; color:#8a97b8; max-width:56ch;}
+  footer a{color:#a99bff;}
+  .footer-meta{
+    margin-top:24px; padding-top:20px;
+    border-top:1px solid rgba(255,255,255,0.1);
+    font-size:12px; color:#5c6b8a;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  }
+
+  @media (max-width:520px){
+    .model-grid{grid-template-columns:1fr;}
+    .scale-grid{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">dev/payments · est. 2010</div>
+    <h1 class="wordmark">Stripe</h1>
+    <p class="tagline">The infrastructure that made "accept a payment online" a seven-line problem instead of a six-week one.</p>
+
+    <div class="terminal">
+      <div class="terminal-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      <pre><span class="cmt"># the original pitch, 2010</span>
+<span class="kw">Stripe</span>.charges.<span class="kw">create</span>(
+  amount<span class="kw">:</span> <span class="str">2000</span>,
+  currency<span class="kw">:</span> <span class="str">"usd"</span>,
+  source<span class="kw">:</span> token
+)
+<span class="cmt"># no merchant account. no bank calls. just this.</span></pre>
+    </div>
+
+    <div class="hero-stats">
+      <div><div class="num">$1.9T</div><div class="lbl">2025 volume</div></div>
+      <div><div class="num">$159B</div><div class="lbl">valuation, Feb 2026</div></div>
+      <div><div class="num">46+</div><div class="lbl">countries, merchant accounts</div></div>
+      <div><div class="num">90%</div><div class="lbl">of the Dow Jones</div></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="section" id="friction">
+    <div class="section-tag">01 — The Friction</div>
+    <h2>Getting paid was harder than building the product.</h2>
+    <p>Before Stripe, a developer who wanted to charge a customer online had to open a business bank account, apply for a merchant account through an acquiring bank, get approved by a card network, integrate a clunky payment gateway, and handle PCI compliance — a process that could take <strong>weeks</strong> and required paperwork most solo founders had never seen before.</p>
+    <p>The people who felt it most were exactly the people trying to start something small: indie developers, side-project founders, and early-stage startups. They could stand up a working product in a weekend but would then lose a month untangling how to actually collect money for it. Paul Graham later called this exact pattern <strong>"schlep blindness"</strong> — the problem was big and valuable, but so unglamorous that almost nobody with the skills to fix it ever tried.</p>
+  </section>
+
+  <section class="section" id="founders">
+    <div class="section-tag">02 — The Founder(s)</div>
+    <h2>Two brothers who kept hitting the same wall.</h2>
+    <p><strong>Patrick and John Collison</strong>, brothers from the small village of Dromineer, County Tipperary, Ireland, were both self-taught programmers from childhood. As teenagers they built and sold an eBay-tools startup, Auctomatic, through Y Combinator for roughly $5 million — Patrick was 19, John was 17.</p>
+    <p>That exit didn't scratch the itch. Patrick went to MIT, John to Harvard, and both kept building side projects online — running into the same payments wall every single time. In late 2009 they took a month-long trip to Buenos Aires and built the first prototype under a Unix-style working name, <strong>/dev/payments</strong>, before renaming it Stripe. The connection to the problem wasn't abstract market research — it was their own recurring frustration as builders, which is why the first product obsessed over developer experience above everything else.</p>
+    <div class="pull">"They saw this problem through the lens of developers because they were developers."</div>
+  </section>
+
+  <section class="section" id="model">
+    <div class="section-tag">03 — The Business Model</div>
+    <h2>A small cut of money that was already moving.</h2>
+    <p>Stripe's core model is a <strong>per-transaction fee</strong> — the standard published rate is 2.9% + 30¢ on a card-not-present US transaction, paid by the business accepting the payment, not the customer. Stripe keeps a small net slice after passing most of that fee through to card networks and issuing banks.</p>
+    <div class="model-grid">
+      <div class="model-card"><div class="who">Payments</div><div class="what">Per-transaction processing fee, paid by the merchant on every successful charge.</div></div>
+      <div class="model-card"><div class="who">Radar</div><div class="what">Fraud detection priced per screened transaction (a few cents each), paid by the merchant.</div></div>
+      <div class="model-card"><div class="who">Billing &amp; Revenue suite</div><div class="what">Subscription and invoicing tools, priced as a percentage of recurring revenue managed.</div></div>
+      <div class="model-card"><div class="who">Atlas</div><div class="what">Company incorporation for founders — a flat setup fee plus a small annual fee.</div></div>
+    </div>
+    <p style="margin-top:18px;">The pattern underneath all of it: Stripe doesn't charge for access to a market, it charges a toll on money that was already going to move — which is why revenue scales automatically with how much commerce its customers do.</p>
+  </section>
+
+  <section class="section" id="scale">
+    <div class="section-tag">04 — Geography &amp; Scale</div>
+    <h2>From Palo Alto to roughly 1.6% of world GDP.</h2>
+    <p>Stripe incorporated in Palo Alto, California in 2010, went through Y Combinator, and launched publicly in the US in September 2011 after a private beta. Expansion since then has been steady rather than explosive — new countries added a few at a time, prioritizing depth of local payment methods (iDEAL in the Netherlands, Boleto in Brazil, Alipay in China) over speed.</p>
+    <div class="scale-grid">
+      <div class="scale-item"><div class="num">$1.9T</div><div class="lbl">total payment volume, 2025 — up 34% year over year</div></div>
+      <div class="scale-item"><div class="num">195</div><div class="lbl">countries businesses can sell into</div></div>
+      <div class="scale-item"><div class="num">5M+</div><div class="lbl">businesses powered directly or via platforms</div></div>
+      <div class="scale-item"><div class="num">1.6%</div><div class="lbl">of global GDP moved through Stripe in 2025</div></div>
+    </div>
+    <p>Its customer base spans from single-developer side projects to Shopify, Lyft, Instacart, Wayfair, and roughly 90% of the Dow Jones Industrial Average — the same underlying product serving both ends of that spectrum at once.</p>
+  </section>
+
+  <section class="section" id="status">
+    <div class="section-tag">05 — Status Today</div>
+    <h2>Still private, still growing, still not in a hurry.</h2>
+    <div class="status-badge"><span class="pulse"></span> Independent &amp; operating</div>
+    <p>Stripe remains privately held. In February 2026 it ran a tender offer — a share sale that gives current and former employees liquidity without a public listing — that valued the company at <strong>$159 billion</strong>, its highest mark ever, up from a $50 billion low in 2023 and past its previous 2021 peak of $95 billion.</p>
+    <div class="valuation-track">
+      <div class="vbar" style="height:31%"><span>2021</span><em>$95B</em></div>
+      <div class="vbar" style="height:16%"><span>2023</span><em>$50B</em></div>
+      <div class="vbar" style="height:29%"><span>Feb '25</span><em>$91.5B</em></div>
+      <div class="vbar" style="height:34%"><span>Sep '25</span><em>$106.7B</em></div>
+      <div class="vbar" style="height:100%"><span>Feb '26</span><em>$159B</em></div>
+    </div>
+    <p style="margin-top:30px;">Rather than pivoting, Stripe has been layering new bets onto the same core: acquisitions in stablecoin infrastructure (Bridge, Privy) and a purpose-built payments blockchain called Tempo, alongside tools for "agentic commerce" that let AI agents initiate payments on a person's behalf. What the staying-private choice signals: a profitable infrastructure company that moves money for a living can afford to keep optionality rather than answer to public markets on a quarterly clock.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <h3>// class encyclopedia entry</h3>
+    <p>Prepared for the Global Fintech Encyclopedia group activity, PGDM Fintech course. Figures on payment volume, valuation, and market reach are drawn from Stripe's own 2025 annual letter and independent industry reporting as of early-to-mid 2026, and may shift as Stripe reports newer numbers.</p>
+    <div class="footer-meta">
+      <span>Founded 2010 · Patrick &amp; John Collison</span>
+      <span>Palo Alto, CA</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
