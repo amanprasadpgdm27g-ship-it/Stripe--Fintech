@@ -1,511 +1,1130 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stripe — Global Fintech Encyclopedia</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#0d1220;
-    --panel:#141b2e;
-    --panel-hi:#182036;
-    --line:#242e47;
-    --text:#c3cbe0;
-    --text-dim:#7c88a8;
-    --white:#eef1fa;
-    --violet:#8f7bff;
-    --violet-bright:#a996ff;
-    --amber:#ffb454;
-    --green:#5fe8a0;
-    --pink:#ff7ac6;
-    --mono:'IBM Plex Mono', Consolas, monospace;
-    --sans:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
-  body{
-    font-family:var(--sans);
-    background:var(--bg);
-    color:var(--text);
-    line-height:1.6;
-  }
-  @media (prefers-reduced-motion: reduce){
-    *{animation:none !important; transition:none !important;}
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stripe — Global Fintech Encyclopedia (V7 Ultra)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  /* ---------- TOP BAR ---------- */
-  .topbar{
-    border-bottom:1px solid var(--line);
-    background:rgba(13,18,32,0.92);
-    backdrop-filter:blur(8px);
-    position:sticky; top:0; z-index:20;
-  }
-  .topbar-inner{
-    max-width:920px; margin:0 auto;
-    display:flex; align-items:center; justify-content:space-between;
-    padding:14px 20px;
-    gap:12px;
-  }
-  .brand{
-    font-family:var(--mono);
-    font-weight:600;
-    color:var(--white);
-    font-size:14px;
-    display:flex; align-items:center; gap:8px;
-  }
-  .brand .live{
-    width:7px; height:7px; border-radius:50%;
-    background:var(--green);
-    animation:pulse 2s infinite;
-    flex-shrink:0;
-  }
-  @keyframes pulse{
-    0%{box-shadow:0 0 0 0 rgba(95,232,160,0.5);}
-    70%{box-shadow:0 0 0 6px rgba(95,232,160,0);}
-    100%{box-shadow:0 0 0 0 rgba(95,232,160,0);}
-  }
-  .toc{
-    display:flex; gap:2px;
-    overflow-x:auto;
-    scrollbar-width:none;
-    max-width:100%;
-  }
-  .toc::-webkit-scrollbar{display:none;}
-  .toc a{
-    font-family:var(--mono);
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:.03em;
-    color:var(--text-dim);
-    text-decoration:none;
-    white-space:nowrap;
-    padding:8px 10px;
-    border-radius:6px;
-    border:1px solid transparent;
-    transition:color .2s, border-color .2s, background .2s;
-  }
-  .toc a.active{
-    color:var(--violet-bright);
-    border-color:var(--violet);
-    background:rgba(143,123,255,0.08);
-  }
+  <style>
+    :root{
+      --mono:'IBM Plex Mono', Consolas, monospace;
+      --sans:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
-  /* ---------- HERO ---------- */
-  .hero{
-    max-width:920px; margin:0 auto;
-    padding:56px 20px 40px;
-    border-bottom:1px solid var(--line);
-  }
-  .hero-tag{
-    font-family:var(--mono);
-    font-size:12px;
-    color:var(--text-dim);
-    text-transform:uppercase;
-    letter-spacing:.08em;
-    margin-bottom:14px;
-  }
-  .hero-tag span{color:var(--violet-bright);}
-  h1{
-    font-family:var(--sans);
-    font-weight:700;
-    font-size:clamp(38px,9vw,58px);
-    letter-spacing:-0.02em;
-    color:var(--white);
-    margin-bottom:14px;
-  }
-  .hero p.lead{
-    font-size:16.5px;
-    color:var(--text);
-    max-width:60ch;
-    margin-bottom:28px;
-  }
+      --bg:#f6f8ff;
+      --bg-soft:#edf2ff;
+      --panel:#ffffffcc;
+      --panel-solid:#ffffff;
+      --panel-hi:#f4f7ff;
+      --line:#dce3f8;
+      --text:#1d2742;
+      --text-dim:#5f6e94;
+      --white:#0f1730;
 
-  .disclaimer{
-    display:flex; gap:12px;
-    background:rgba(255,180,84,0.06);
-    border:1px solid rgba(255,180,84,0.25);
-    border-radius:8px;
-    padding:14px 16px;
-    margin-bottom:32px;
-    font-size:13px;
-    color:#e0c396;
-  }
-  .disclaimer .icon{font-size:16px; line-height:1;}
-  .disclaimer strong{color:var(--amber); font-weight:600;}
+      --violet:#6b5cff;
+      --violet-bright:#5746ff;
+      --amber:#e6951f;
+      --green:#07b06e;
+      --pink:#ff4fa3;
+      --cyan:#1ea7ff;
+      --stripe:#635bff;
+      --paypal:#0070e0;
+      --adyen:#0abf53;
 
-  /* stat panel — mimics mempool's data tables */
-  .stat-panel{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    border:1px solid var(--line);
-    border-radius:10px;
-    overflow:hidden;
-    background:var(--panel);
-  }
-  .stat-cell{
-    padding:16px 14px;
-    border-right:1px solid var(--line);
-  }
-  .stat-cell:last-child{border-right:none;}
-  .stat-cell .num{
-    font-family:var(--mono);
-    font-size:clamp(18px,4vw,22px);
-    font-weight:600;
-    color:var(--white);
-  }
-  .stat-cell .lbl{
-    font-size:11px;
-    color:var(--text-dim);
-    text-transform:uppercase;
-    letter-spacing:.04em;
-    margin-top:6px;
-  }
+      --shadow:0 10px 30px rgba(57,74,130,.12);
+      --hero-glow: radial-gradient(circle at 20% 10%, rgba(107,92,255,.24), transparent 45%),
+                   radial-gradient(circle at 80% 30%, rgba(30,167,255,.20), transparent 40%),
+                   radial-gradient(circle at 55% 85%, rgba(255,79,163,.14), transparent 40%);
+    }
 
-  /* ---------- SECTIONS ---------- */
-  main{max-width:920px; margin:0 auto; padding:0 20px;}
+    html[data-theme="dark"]{
+      --bg:#0d1220;
+      --bg-soft:#121a2c;
+      --panel:#141b2ed9;
+      --panel-solid:#141b2e;
+      --panel-hi:#182036;
+      --line:#242e47;
+      --text:#c3cbe0;
+      --text-dim:#7c88a8;
+      --white:#eef1fa;
 
-  .section{
-    padding:52px 0;
-    border-bottom:1px solid var(--line);
-    opacity:0;
-    transform:translateY(14px);
-    transition:opacity .6s ease, transform .6s ease;
-  }
-  .section.in{opacity:1; transform:translateY(0);}
-  .section:last-of-type{border-bottom:none;}
+      --violet:#8f7bff;
+      --violet-bright:#a996ff;
+      --amber:#ffb454;
+      --green:#5fe8a0;
+      --pink:#ff7ac6;
+      --cyan:#49c7ff;
+      --stripe:#8f7bff;
+      --paypal:#4fa3ff;
+      --adyen:#41de85;
 
-  .section-num{
-    font-family:var(--mono);
-    font-size:12.5px;
-    color:var(--violet-bright);
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    margin-bottom:10px;
-  }
-  .section h2{
-    font-family:var(--sans);
-    font-weight:700;
-    font-size:clamp(23px,5vw,29px);
-    color:var(--white);
-    letter-spacing:-0.01em;
-    margin-bottom:20px;
-    max-width:26ch;
-  }
-  .section p{
-    font-size:15.5px;
-    color:var(--text);
-    margin-bottom:16px;
-    max-width:66ch;
-  }
-  .section p:last-child{margin-bottom:0;}
-  .section strong{color:var(--white); font-weight:600;}
+      --shadow:0 12px 32px rgba(0,0,0,.36);
+      --hero-glow: radial-gradient(circle at 20% 10%, rgba(143,123,255,.20), transparent 45%),
+                   radial-gradient(circle at 80% 30%, rgba(73,199,255,.16), transparent 40%),
+                   radial-gradient(circle at 55% 85%, rgba(255,122,198,.12), transparent 40%);
+    }
 
-  /* glossary term callout, matching the reference site's "TERM — definition" pattern */
-  .term-row{
-    display:flex; gap:14px;
-    padding:12px 0;
-    border-top:1px solid var(--line);
-    align-items:baseline;
-    flex-wrap:wrap;
-  }
-  .term-box{margin:22px 0;}
-  .term-box .term-row:first-child{border-top:none;}
-  .term-tag{
-    font-family:var(--mono);
-    font-size:12px;
-    font-weight:600;
-    color:var(--amber);
-    min-width:150px;
-    flex-shrink:0;
-  }
-  .term-def{font-size:14px; color:var(--text-dim); flex:1; min-width:200px;}
+    *{box-sizing:border-box; margin:0; padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:var(--sans);
+      background:linear-gradient(180deg, var(--bg), var(--bg-soft));
+      color:var(--text);
+      line-height:1.7;
+      min-height:100vh;
+      overflow-x:hidden;
+    }
 
-  .callout{
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-left:3px solid var(--violet);
-    border-radius:0 8px 8px 0;
-    padding:16px 18px;
-    margin:22px 0;
-    font-size:14.5px;
-    color:var(--text);
-  }
-  .callout strong{color:var(--violet-bright);}
+    @media (prefers-reduced-motion: reduce){
+      *{animation:none !important; transition:none !important}
+    }
 
-  /* panel grid — business model, scale */
-  .panel-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:1px;
-    background:var(--line);
-    border:1px solid var(--line);
-    border-radius:10px;
-    overflow:hidden;
-    margin-top:22px;
-  }
-  .panel-cell{
-    background:var(--panel);
-    padding:18px;
-    transition:background .2s ease;
-  }
-  .panel-cell:hover{background:var(--panel-hi);}
-  .panel-cell .who{
-    font-family:var(--mono);
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:.05em;
-    color:var(--violet-bright);
-    margin-bottom:8px;
-  }
-  .panel-cell .what{font-size:14px; color:var(--text);}
+    .ambient{
+      position:fixed; inset:0; pointer-events:none; z-index:-3;
+      background:var(--hero-glow);
+      filter:saturate(1.1);
+    }
 
-  .scale-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:1px;
-    background:var(--line);
-    border:1px solid var(--line);
-    border-radius:10px;
-    overflow:hidden;
-    margin:24px 0;
-  }
-  .scale-cell{
-    background:var(--panel);
-    padding:20px 18px;
-  }
-  .scale-cell .num{
-    font-family:var(--mono);
-    font-size:clamp(22px,5vw,28px);
-    font-weight:700;
-    color:var(--green);
-    line-height:1;
-  }
-  .scale-cell .lbl{
-    font-size:12px;
-    color:var(--text-dim);
-    margin-top:8px;
-  }
+    /* NEW: PARTICLE CANVAS */
+    #particleCanvas{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:-2;
+      pointer-events:none;
+      opacity:.55;
+    }
 
-  .status-badge{
-    display:inline-flex; align-items:center; gap:8px;
-    font-family:var(--mono);
-    font-size:12.5px;
-    background:rgba(95,232,160,0.08);
-    color:var(--green);
-    border:1px solid rgba(95,232,160,0.3);
-    border-radius:999px;
-    padding:6px 14px;
-    margin-bottom:20px;
-  }
-  .status-badge .pulse{
-    width:7px; height:7px; border-radius:50%;
-    background:var(--green);
-    animation:pulse 2s infinite;
-  }
+    .noise{
+      position:fixed; inset:0; pointer-events:none; z-index:-1; opacity:.05;
+      background-image: radial-gradient(#000 0.5px, transparent 0.5px);
+      background-size:3px 3px;
+    }
 
-  /* valuation table — mimics mempool's difficulty/table panels */
-  .val-table{
-    width:100%;
-    border-collapse:collapse;
-    margin:24px 0;
-    font-family:var(--mono);
-    font-size:13px;
-    border:1px solid var(--line);
-    border-radius:10px;
-    overflow:hidden;
-  }
-  .val-table th{
-    text-align:left;
-    background:var(--panel-hi);
-    color:var(--text-dim);
-    font-weight:500;
-    padding:10px 14px;
-    text-transform:uppercase;
-    font-size:10.5px;
-    letter-spacing:.05em;
-    border-bottom:1px solid var(--line);
-  }
-  .val-table td{
-    padding:10px 14px;
-    border-bottom:1px solid var(--line);
-    background:var(--panel);
-    color:var(--text);
-  }
-  .val-table tr:last-child td{border-bottom:none; background:rgba(143,123,255,0.08); color:var(--white); font-weight:600;}
-  .val-table .bar-cell{position:relative;}
-  .val-bar{
-    height:6px;
-    border-radius:3px;
-    background:linear-gradient(90deg, var(--violet), var(--violet-bright));
-  }
+    .progress{
+      position:fixed; top:0; left:0; height:3px; width:0%;
+      background:linear-gradient(90deg,var(--violet),var(--pink),var(--cyan));
+      z-index:100;
+      transition:width .08s linear;
+    }
 
-  footer{
-    border-top:1px solid var(--line);
-    padding:40px 20px 36px;
-  }
-  .footer-inner{max-width:920px; margin:0 auto;}
-  footer h3{
-    color:var(--white); font-size:13px; margin-bottom:10px;
-    font-family:var(--mono); letter-spacing:.04em; text-transform:uppercase;
-  }
-  footer p{font-size:13px; color:var(--text-dim); max-width:60ch;}
-  .footer-meta{
-    margin-top:22px; padding-top:20px;
-    border-top:1px solid var(--line);
-    font-size:11.5px; color:var(--text-dim);
-    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
-    font-family:var(--mono);
-  }
+    .topbar{
+      position:sticky; top:0; z-index:80;
+      border-bottom:1px solid var(--line);
+      background:color-mix(in srgb, var(--bg) 82%, transparent);
+      backdrop-filter:blur(12px);
+    }
+    .topbar-inner{
+      max-width:1200px; margin:0 auto;
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      padding:12px 20px;
+    }
+    .brand{
+      font-family:var(--mono); font-size:13px; font-weight:700; color:var(--white);
+      display:flex; align-items:center; gap:8px;
+    }
+    .brand-dot{
+      width:8px; height:8px; border-radius:50%;
+      background:var(--green);
+      box-shadow:0 0 0 0 rgba(7,176,110,.45);
+      animation:pulse 2s infinite;
+    }
+    @keyframes pulse{
+      0%{box-shadow:0 0 0 0 rgba(7,176,110,.45)}
+      70%{box-shadow:0 0 0 8px rgba(7,176,110,0)}
+      100%{box-shadow:0 0 0 0 rgba(7,176,110,0)}
+    }
 
-  @media (max-width:640px){
-    .stat-panel{grid-template-columns:repeat(2,1fr);}
-    .stat-cell:nth-child(2){border-right:none;}
-    .stat-cell{border-bottom:1px solid var(--line);}
-    .stat-cell:nth-child(3), .stat-cell:nth-child(4){border-bottom:none;}
-    .panel-grid, .scale-grid{grid-template-columns:1fr;}
-    .term-tag{min-width:100%;}
-  }
+    .toolbar{display:flex; align-items:center; gap:8px}
+    .theme-btn{
+      border:1px solid var(--line);
+      background:var(--panel);
+      color:var(--text);
+      border-radius:999px;
+      padding:7px 12px;
+      font-family:var(--mono);
+      font-size:11px;
+      cursor:pointer;
+      transition:.2s;
+    }
+    .theme-btn:hover{
+      transform:translateY(-1px);
+      border-color:var(--violet);
+      color:var(--violet-bright);
+      box-shadow:var(--shadow);
+    }
 
-  a:focus-visible{outline:2px solid var(--violet); outline-offset:2px;}
-</style>
+    .toc{
+      display:flex; gap:2px; overflow:auto; scrollbar-width:none;
+      max-width:min(72vw,900px);
+    }
+    .toc::-webkit-scrollbar{display:none}
+    .toc a{
+      font-family:var(--mono);
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.03em;
+      color:var(--text-dim);
+      text-decoration:none;
+      white-space:nowrap;
+      padding:8px 10px;
+      border:1px solid transparent;
+      border-radius:8px;
+      transition:.2s;
+    }
+    .toc a.active{
+      color:var(--violet-bright);
+      border-color:color-mix(in srgb, var(--violet) 48%, var(--line));
+      background:color-mix(in srgb, var(--violet) 10%, transparent);
+    }
+
+    .hero{
+      max-width:1200px; margin:0 auto;
+      padding:68px 20px 46px;
+      border-bottom:1px solid var(--line);
+      position:relative;
+    }
+    .hero::after{
+      content:"";
+      position:absolute; right:-100px; top:-90px;
+      width:360px; aspect-ratio:1; border-radius:50%;
+      background:radial-gradient(circle, color-mix(in srgb,var(--violet) 26%, transparent), transparent 60%);
+      pointer-events:none;
+      animation:floatOrb 8s ease-in-out infinite;
+    }
+    @keyframes floatOrb{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(14px)}
+    }
+
+    .hero-tag{
+      font-family:var(--mono);
+      font-size:12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--text-dim);
+      margin-bottom:14px;
+    }
+    .hero-tag span{color:var(--violet-bright)}
+
+    h1{
+      font-size:clamp(40px,7vw,72px);
+      line-height:1.03;
+      font-weight:800;
+      letter-spacing:-.03em;
+      color:var(--white);
+      margin-bottom:14px;
+      max-width:15ch;
+    }
+    .gradient-text{
+      background:linear-gradient(90deg,var(--violet-bright),var(--pink),var(--cyan));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    .lead{
+      font-size:18px;
+      color:var(--text);
+      max-width:80ch;
+      margin-bottom:24px;
+    }
+
+    .disclaimer{
+      border:1px solid color-mix(in srgb, var(--amber) 36%, var(--line));
+      background:color-mix(in srgb, var(--amber) 10%, transparent);
+      color:#7f5b1a;
+      border-radius:12px;
+      padding:12px 14px;
+      font-size:13px;
+      margin-bottom:20px;
+    }
+    html[data-theme="dark"] .disclaimer{color:#e7c483}
+
+    .hero-kpis{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:12px;
+    }
+    .kpi{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:16px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(8px);
+      transition:.24s;
+    }
+    .kpi:hover{transform:translateY(-3px)}
+    .kpi .num{
+      font-family:var(--mono);
+      font-size:clamp(18px,2.7vw,25px);
+      font-weight:700;
+      color:var(--white);
+      line-height:1.15;
+    }
+    .kpi .lbl{
+      margin-top:6px;
+      font-size:11px;
+      color:var(--text-dim);
+      letter-spacing:.04em;
+      text-transform:uppercase;
+    }
+
+    main{max-width:1200px; margin:0 auto; padding:0 20px}
+    .section{
+      padding:56px 0;
+      border-bottom:1px solid var(--line);
+    }
+    .section-num{
+      font-family:var(--mono);
+      font-size:12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--violet-bright);
+      margin-bottom:10px;
+    }
+    .section h2{
+      font-size:clamp(28px,4vw,40px);
+      line-height:1.14;
+      letter-spacing:-.018em;
+      color:var(--white);
+      margin-bottom:16px;
+      max-width:27ch;
+    }
+    .section p{
+      font-size:16px;
+      color:var(--text);
+      margin-bottom:14px;
+      max-width:85ch;
+    }
+
+    .reveal{
+      opacity:0;
+      transform:translateY(16px);
+      transition:.62s cubic-bezier(.2,.7,.3,1);
+    }
+    .reveal.in{opacity:1; transform:translateY(0)}
+
+    .glass{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:14px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(8px);
+    }
+
+    .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:16px}
+    .card{
+      padding:16px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      background:var(--panel-solid);
+    }
+    .card h3{font-size:16px; color:var(--white); margin-bottom:8px}
+    .card p{font-size:14px; margin:0; color:var(--text)}
+
+    .founder-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      margin-top:16px;
+    }
+    .founder{
+      display:grid;
+      grid-template-columns:100px 1fr;
+      gap:14px;
+      align-items:center;
+      padding:16px;
+      transition:.24s;
+    }
+    .founder:hover{transform:translateY(-3px)}
+    .founder img{
+      width:100px; height:100px; object-fit:cover;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#dde4f8;
+    }
+    .founder h3{font-size:19px; color:var(--white); margin-bottom:2px}
+    .meta{
+      font-family:var(--mono);
+      font-size:11.5px;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+      color:var(--violet-bright);
+      margin-bottom:8px;
+    }
+    .founder p{font-size:14px; margin:0; color:var(--text)}
+
+    /* NEW: Auto milestones slider */
+    .slider-wrap{
+      margin-top:16px;
+      position:relative;
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:var(--panel);
+      box-shadow:var(--shadow);
+    }
+    .slides{
+      display:flex;
+      transition:transform .6s cubic-bezier(.22,.7,.25,1);
+      width:100%;
+    }
+    .slide{
+      min-width:100%;
+      padding:24px 22px 22px;
+      display:grid;
+      grid-template-columns:120px 1fr;
+      gap:14px;
+      align-items:flex-start;
+    }
+    .slide-year{
+      font-family:var(--mono);
+      font-size:26px;
+      font-weight:700;
+      color:var(--violet-bright);
+      line-height:1.1;
+    }
+    .slide h3{
+      color:var(--white);
+      font-size:20px;
+      margin-bottom:6px;
+    }
+    .slide p{
+      margin:0;
+      font-size:15px;
+      color:var(--text);
+      max-width:70ch;
+    }
+    .slider-controls{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:12px 14px;
+      border-top:1px solid var(--line);
+      background:var(--panel-solid);
+    }
+    .slider-btns{display:flex; gap:8px}
+    .slider-btn{
+      border:1px solid var(--line);
+      background:var(--panel);
+      color:var(--text);
+      border-radius:8px;
+      padding:6px 10px;
+      font-family:var(--mono);
+      font-size:11px;
+      cursor:pointer;
+      transition:.2s;
+    }
+    .slider-btn:hover{border-color:var(--violet); color:var(--violet-bright)}
+    .dots{display:flex; gap:6px; flex-wrap:wrap}
+    .dot{
+      width:8px; height:8px; border-radius:50%;
+      background:color-mix(in srgb, var(--text-dim) 30%, transparent);
+      border:none; cursor:pointer; padding:0;
+    }
+    .dot.active{background:var(--violet)}
+
+    .chart-wrap{
+      margin-top:20px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+    .chart-card{padding:14px}
+    .chart-title{
+      font-family:var(--mono);
+      font-size:11px;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+      color:var(--text-dim);
+      margin-bottom:10px;
+    }
+    .chart-legend{
+      margin-top:8px;
+      display:flex; flex-wrap:wrap; gap:14px;
+      font-size:12px; color:var(--text-dim);
+    }
+    .legend-dot{
+      width:9px; height:9px; border-radius:50%;
+      display:inline-block; margin-right:6px;
+    }
+
+    .compare-controls{
+      display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 8px;
+    }
+    .compare-btn{
+      border:1px solid var(--line);
+      background:var(--panel-solid);
+      color:var(--text);
+      border-radius:999px;
+      padding:6px 10px;
+      font-family:var(--mono);
+      font-size:11px;
+      cursor:pointer;
+    }
+    .compare-btn.active{
+      border-color:var(--violet);
+      color:var(--violet-bright);
+      background:color-mix(in srgb,var(--violet) 10%, transparent);
+    }
+
+    .tooltip{
+      position:fixed;
+      z-index:210;
+      pointer-events:none;
+      opacity:0;
+      transform:translateY(6px);
+      transition:.14s;
+      background:var(--panel-solid);
+      border:1px solid var(--line);
+      border-radius:8px;
+      padding:6px 8px;
+      font-size:12px;
+      box-shadow:var(--shadow);
+      color:var(--text);
+    }
+    .tooltip.show{opacity:1; transform:translateY(0)}
+
+    footer{
+      border-top:1px solid var(--line);
+      padding:36px 20px;
+    }
+    .footer-inner{max-width:1200px; margin:0 auto}
+    .footer-inner h3{
+      font-family:var(--mono);
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.05em;
+      color:var(--white);
+      margin-bottom:8px;
+    }
+    .footer-inner p{font-size:13px; color:var(--text-dim)}
+    .footer-meta{
+      margin-top:14px;
+      padding-top:14px;
+      border-top:1px solid var(--line);
+      display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+      font-family:var(--mono); font-size:11px; color:var(--text-dim);
+    }
+
+    @media (max-width:1080px){
+      .hero-kpis{grid-template-columns:repeat(3,1fr)}
+    }
+    @media (max-width:920px){
+      .chart-wrap,.founder-grid{grid-template-columns:1fr}
+      .grid-3{grid-template-columns:1fr}
+      .hero-kpis{grid-template-columns:repeat(2,1fr)}
+      .slide{grid-template-columns:1fr}
+    }
+    @media (max-width:740px){
+      .toc{display:none}
+      .founder{grid-template-columns:78px 1fr}
+      .founder img{width:78px; height:78px}
+    }
+
+    a:focus-visible, button:focus-visible{
+      outline:2px solid var(--violet);
+      outline-offset:2px;
+    }
+  </style>
 </head>
 <body>
+  <div class="ambient"></div>
+  <canvas id="particleCanvas"></canvas>
+  <div class="noise"></div>
+  <div class="progress" id="progress"></div>
+  <div class="tooltip" id="tooltip"></div>
 
-<nav class="topbar">
-  <div class="topbar-inner">
-    <div class="brand"><span class="live"></span> stripe.entry</div>
-    <div class="toc" id="toc">
-      <a href="#friction" data-target="friction">01 Friction</a>
-      <a href="#founders" data-target="founders">02 Founders</a>
-      <a href="#model" data-target="model">03 Model</a>
-      <a href="#scale" data-target="scale">04 Scale</a>
-      <a href="#status" data-target="status">05 Status</a>
+  <nav class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><span class="brand-dot"></span> stripe.entry / v7 ultra</div>
+      <div class="toolbar">
+        <button class="theme-btn" id="themeBtn">🌙 Dark</button>
+        <div class="toc" id="toc">
+          <a href="#intro" data-target="intro">01 Intro</a>
+          <a href="#founders" data-target="founders">02 Founders</a>
+          <a href="#products" data-target="products">03 Products</a>
+          <a href="#milestones" data-target="milestones">04 Milestones</a>
+          <a href="#charts" data-target="charts">05 Charts</a>
+          <a href="#compare" data-target="compare">06 Compare</a>
+        </div>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<header class="hero">
-  <div class="hero-tag"><span>//</span> dev/payments · founded 2010 · Fintech Encyclopedia entry</div>
-  <h1>Stripe</h1>
-  <p class="lead">The infrastructure that turned "accept a payment online" from a six-week integration project into a seven-line API call.</p>
+  <header class="hero" id="intro">
+    <div class="hero-tag"><span>//</span> fintech encyclopedia · interactive ultra edition</div>
+    <h1>Stripe as <span class="gradient-text">internet-scale</span> financial infrastructure</h1>
+    <p class="lead">
+      Stripe transformed digital monetization by abstracting payment complexity into developer tooling.
+      This upgraded profile includes a particle system, auto-playing milestone slider, and live competitor mini chart.
+    </p>
 
-  <div class="disclaimer">
-    <span class="icon">⚠</span>
-    <div><strong>Note on figures.</strong> Stripe is privately held and does not publish full financial statements. Valuation and revenue numbers below come from Stripe's own 2025 annual letter and independent industry reporting as of early-to-mid 2026 — treat them as the best available estimate, not audited fact.</div>
-  </div>
-
-  <div class="stat-panel">
-    <div class="stat-cell"><div class="num">$1.9T</div><div class="lbl">2025 volume</div></div>
-    <div class="stat-cell"><div class="num">$159B</div><div class="lbl">valuation, Feb '26</div></div>
-    <div class="stat-cell"><div class="num">46+</div><div class="lbl">countries</div></div>
-    <div class="stat-cell"><div class="num">90%</div><div class="lbl">of Dow Jones</div></div>
-  </div>
-</header>
-
-<main>
-
-  <section class="section" id="friction">
-    <div class="section-num">Section 01</div>
-    <h2>The Friction — getting paid was harder than building the product</h2>
-    <p>Before Stripe, a developer who wanted to charge a customer online had to open a business bank account, apply for a merchant account through an acquiring bank, get approved by a card network, integrate a clunky payment gateway, and handle PCI compliance — a process that could take <strong>weeks</strong> and required paperwork most solo founders had never seen before.</p>
-    <p>The people who felt it most were exactly the people trying to start something small: indie developers, side-project founders, and early-stage startups. They could stand up a working product in a weekend, then lose a month untangling how to actually collect money for it.</p>
-    <div class="callout"><strong>Key idea —</strong> Paul Graham later called this exact pattern "schlep blindness": the problem was big and valuable, but so unglamorous that almost nobody with the skills to fix it ever tried.</div>
-  </section>
-
-  <section class="section" id="founders">
-    <div class="section-num">Section 02</div>
-    <h2>The Founders — two brothers who kept hitting the same wall</h2>
-    <p><strong>Patrick and John Collison</strong>, brothers from the small village of Dromineer, County Tipperary, Ireland, were both self-taught programmers from childhood. As teenagers they built and sold an eBay-tools startup, Auctomatic, through Y Combinator for roughly $5 million — Patrick was 19, John was 17.</p>
-    <p>That exit didn't scratch the itch. Patrick went to MIT, John to Harvard, and both kept building side projects online — running into the same payments wall every single time. In late 2009 they took a month-long trip to Buenos Aires and built the first prototype under a Unix-style working name.</p>
-    <div class="term-box">
-      <div class="term-row"><div class="term-tag">/dev/payments</div><div class="term-def">The original working name — a Unix-style in-joke signaling exactly who the first users were meant to be: developers.</div></div>
-      <div class="term-row"><div class="term-tag">Patrick Collison</div><div class="term-def">CEO. Self-taught programmer from age 10; sold Auctomatic at 19.</div></div>
-      <div class="term-row"><div class="term-tag">John Collison</div><div class="term-def">President. Left Harvard to co-found Stripe full-time in 2010.</div></div>
+    <div class="disclaimer">
+      <strong>Data note:</strong> Stripe is private; selected figures are educational estimates/commonly cited values used for classroom analysis.
     </div>
-    <div class="callout">"They saw this problem through the lens of developers because they were developers." The connection wasn't market research — it was their own recurring frustration as builders.</div>
-  </section>
 
-  <section class="section" id="model">
-    <div class="section-num">Section 03</div>
-    <h2>The Business Model — a small cut of money that was already moving</h2>
-    <p>Stripe's core model is a <strong>per-transaction fee</strong> — the standard published rate is 2.9% + 30¢ on a card-not-present US transaction, paid by the business accepting the payment, not the customer. Stripe keeps a small net slice after passing most of that fee through to card networks and issuing banks.</p>
-    <div class="panel-grid">
-      <div class="panel-cell"><div class="who">Payments</div><div class="what">Per-transaction processing fee, paid by the merchant on every successful charge.</div></div>
-      <div class="panel-cell"><div class="who">Radar</div><div class="what">Fraud detection priced per screened transaction (a few cents each), paid by the merchant.</div></div>
-      <div class="panel-cell"><div class="who">Billing &amp; Revenue suite</div><div class="what">Subscription and invoicing tools, priced as a percentage of recurring revenue managed.</div></div>
-      <div class="panel-cell"><div class="who">Atlas</div><div class="what">Company incorporation for founders — a flat setup fee plus a small annual fee.</div></div>
+    <div class="hero-kpis">
+      <div class="kpi reveal"><div class="num" data-count="1.9" data-prefix="$" data-suffix="T">$0T</div><div class="lbl">2025 Volume</div></div>
+      <div class="kpi reveal"><div class="num" data-count="159" data-prefix="$" data-suffix="B">$0B</div><div class="lbl">Valuation (2026)</div></div>
+      <div class="kpi reveal"><div class="num" data-count="46" data-suffix="+">0+</div><div class="lbl">Direct Countries</div></div>
+      <div class="kpi reveal"><div class="num" data-count="195">0</div><div class="lbl">Sell-into Countries</div></div>
+      <div class="kpi reveal"><div class="num" data-count="5" data-suffix="M+">0M+</div><div class="lbl">Businesses Served</div></div>
     </div>
-    <p style="margin-top:22px;">The pattern underneath all of it: Stripe doesn't charge for access to a market, it charges a toll on money that was already going to move — so revenue scales automatically with how much commerce its customers do.</p>
-  </section>
+  </header>
 
-  <section class="section" id="scale">
-    <div class="section-num">Section 04</div>
-    <h2>Geography &amp; Scale — from Palo Alto to 1.6% of world GDP</h2>
-    <p>Stripe incorporated in Palo Alto, California in 2010, went through Y Combinator, and launched publicly in the US in September 2011 after a private beta. Expansion since then has been steady rather than explosive — new countries added a few at a time, prioritizing depth of local payment methods (iDEAL in the Netherlands, Boleto in Brazil, Alipay in China) over speed.</p>
-    <div class="scale-grid">
-      <div class="scale-cell"><div class="num">$1.9T</div><div class="lbl">total payment volume, 2025 — up 34% year over year</div></div>
-      <div class="scale-cell"><div class="num">195</div><div class="lbl">countries businesses can sell into</div></div>
-      <div class="scale-cell"><div class="num">5M+</div><div class="lbl">businesses powered directly or via platforms</div></div>
-      <div class="scale-cell"><div class="num">1.6%</div><div class="lbl">of global GDP moved through Stripe in 2025</div></div>
+  <main>
+    <section class="section" id="founders">
+      <div class="section-num reveal">Section 02</div>
+      <h2 class="reveal">Founders</h2>
+      <p class="reveal">Patrick and John Collison built Stripe around developer experience, clean APIs, and rapid product iteration.</p>
+
+      <div class="founder-grid">
+        <article class="founder glass reveal">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Patrick_Collison_2019.jpg/440px-Patrick_Collison_2019.jpg" alt="Patrick Collison">
+          <div>
+            <h3>Patrick Collison</h3>
+            <div class="meta">Co-founder · CEO</div>
+            <p>Leads long-term strategy, product direction, and infrastructure expansion.</p>
+          </div>
+        </article>
+        <article class="founder glass reveal">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/John_Collison_%282019%29.jpg/440px-John_Collison_%282019%29.jpg" alt="John Collison">
+          <div>
+            <h3>John Collison</h3>
+            <div class="meta">Co-founder · President</div>
+            <p>Focused on execution, global operating scale, and adjacent product lines.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="products">
+      <div class="section-num reveal">Section 03</div>
+      <h2 class="reveal">Product Stack</h2>
+      <div class="grid-3">
+        <div class="card reveal"><h3>Payments</h3><p>Global acceptance and routing for cards + local methods.</p></div>
+        <div class="card reveal"><h3>Billing</h3><p>Subscription lifecycle, invoicing, metering, recurring logic.</p></div>
+        <div class="card reveal"><h3>Radar</h3><p>Fraud scoring and custom rules for abuse prevention.</p></div>
+      </div>
+    </section>
+
+    <!-- NEW: AUTO-PLAYING MILESTONES SLIDER -->
+    <section class="section" id="milestones">
+      <div class="section-num reveal">Section 04</div>
+      <h2 class="reveal">Auto-Playing Milestones Slider</h2>
+      <p class="reveal">Slides auto-advance every 3.5s. You can manually navigate with arrows or dots.</p>
+
+      <div class="slider-wrap reveal" id="milestoneSlider">
+        <div class="slides" id="slides">
+          <article class="slide">
+            <div class="slide-year">2010</div>
+            <div>
+              <h3>Stripe Founded</h3>
+              <p>Founded in Palo Alto with a developer-first thesis: make online payments programmable and simple.</p>
+            </div>
+          </article>
+          <article class="slide">
+            <div class="slide-year">2011</div>
+            <div>
+              <h3>Public Launch</h3>
+              <p>Launches broadly after private beta, gaining traction among startups and software businesses.</p>
+            </div>
+          </article>
+          <article class="slide">
+            <div class="slide-year">2021</div>
+            <div>
+              <h3>Scale Inflection</h3>
+              <p>Reaches major private-market valuation highs as digital commerce infrastructure demand rises globally.</p>
+            </div>
+          </article>
+          <article class="slide">
+            <div class="slide-year">2023</div>
+            <div>
+              <h3>Market Reset</h3>
+              <p>Valuation resets with macro tightening, while operating depth and product expansion continue.</p>
+            </div>
+          </article>
+          <article class="slide">
+            <div class="slide-year">2026</div>
+            <div>
+              <h3>$159B Tender Signal</h3>
+              <p>Tender-driven pricing suggests renewed confidence in Stripe’s long-term infrastructure trajectory.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="slider-controls">
+          <div class="slider-btns">
+            <button class="slider-btn" id="prevSlide">← Prev</button>
+            <button class="slider-btn" id="nextSlide">Next →</button>
+            <button class="slider-btn" id="pauseSlide">Pause</button>
+          </div>
+          <div class="dots" id="dots"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="charts">
+      <div class="section-num reveal">Section 05</div>
+      <h2 class="reveal">Interactive Stripe Data</h2>
+      <p class="reveal">Hover points and bars for exact values.</p>
+
+      <div class="chart-wrap">
+        <div class="chart-card glass reveal">
+          <div class="chart-title">Stripe Valuation Trend (USD Billions)</div>
+          <svg id="valuationChart" viewBox="0 0 560 280" width="100%"></svg>
+          <div class="chart-legend">
+            <span><span class="legend-dot" style="background:var(--violet)"></span> Valuation</span>
+          </div>
+        </div>
+
+        <div class="chart-card glass reveal">
+          <div class="chart-title">Stripe Payment Volume (USD Trillions)</div>
+          <svg id="volumeChart" viewBox="0 0 560 280" width="100%"></svg>
+          <div class="chart-legend">
+            <span><span class="legend-dot" style="background:var(--cyan)"></span> Annual volume</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW: LIVE COMPARISON MINI CHART -->
+    <section class="section" id="compare">
+      <div class="section-num reveal">Section 06</div>
+      <h2 class="reveal">Live Mini Comparison: Stripe vs PayPal vs Adyen</h2>
+      <p class="reveal">Switch metric to compare profile differences (illustrative educational benchmark values).</p>
+
+      <div class="glass chart-card reveal">
+        <div class="compare-controls" id="compareControls">
+          <button class="compare-btn active" data-metric="dev">Developer Friendliness</button>
+          <button class="compare-btn" data-metric="enterprise">Enterprise Penetration</button>
+          <button class="compare-btn" data-metric="global">Global Coverage</button>
+          <button class="compare-btn" data-metric="stack">Platform Breadth</button>
+        </div>
+        <svg id="compareChart" viewBox="0 0 760 300" width="100%"></svg>
+        <div class="chart-legend">
+          <span><span class="legend-dot" style="background:var(--stripe)"></span> Stripe</span>
+          <span><span class="legend-dot" style="background:var(--paypal)"></span> PayPal</span>
+          <span><span class="legend-dot" style="background:var(--adyen)"></span> Adyen</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <h3>// fintech encyclopedia · ultra interactive profile</h3>
+      <p>This version includes animated particles, auto-slider milestones, and a live comparative mini chart.</p>
+      <div class="footer-meta">
+        <span>Prepared for classroom presentation</span>
+        <span>Version V7 · Interactive</span>
+      </div>
     </div>
-    <p>Its customer base spans from single-developer side projects to Shopify, Lyft, Instacart, Wayfair, and roughly 90% of the Dow Jones Industrial Average — the same underlying product serving both ends of that spectrum at once.</p>
-  </section>
+  </footer>
 
-  <section class="section" id="status">
-    <div class="section-num">Section 05</div>
-    <h2>Status Today — still private, still growing, still not in a hurry</h2>
-    <div class="status-badge"><span class="pulse"></span> Independent &amp; operating</div>
-    <p>Stripe remains privately held. In February 2026 it ran a tender offer — a share sale that gives current and former employees liquidity without a public listing — that valued the company at <strong>$159 billion</strong>, its highest mark ever.</p>
+  <script>
+    const $ = (q,r=document)=>r.querySelector(q);
+    const $$ = (q,r=document)=>[...r.querySelectorAll(q)];
 
-    <table class="val-table">
-      <thead><tr><th>Date</th><th>Valuation</th><th style="width:40%">Relative</th></tr></thead>
-      <tbody>
-        <tr><td>2021 peak</td><td>$95B</td><td class="bar-cell"><div class="val-bar" style="width:60%"></div></td></tr>
-        <tr><td>2023 low</td><td>$50B</td><td class="bar-cell"><div class="val-bar" style="width:31%"></div></td></tr>
-        <tr><td>Feb 2025</td><td>$91.5B</td><td class="bar-cell"><div class="val-bar" style="width:58%"></div></td></tr>
-        <tr><td>Sep 2025</td><td>$106.7B</td><td class="bar-cell"><div class="val-bar" style="width:67%"></div></td></tr>
-        <tr><td>Feb 2026</td><td>$159B</td><td class="bar-cell"><div class="val-bar" style="width:100%"></div></td></tr>
-      </tbody>
-    </table>
+    // Progress
+    const progressBar = $('#progress');
+    function updateProgress(){
+      const h = document.documentElement;
+      progressBar.style.width = `${Math.max(0,Math.min((h.scrollTop/(h.scrollHeight-h.clientHeight))*100,100))}%`;
+    }
+    addEventListener('scroll', updateProgress, {passive:true});
+    updateProgress();
 
-    <p>Rather than pivoting, Stripe has been layering new bets onto the same core: acquisitions in stablecoin infrastructure (Bridge, Privy) and a purpose-built payments blockchain called Tempo, alongside tools for "agentic commerce" that let AI agents initiate payments on a person's behalf.</p>
-    <div class="callout"><strong>What this tells us —</strong> a profitable infrastructure company that moves money for a living can afford to keep optionality rather than answer to public markets on a quarterly clock.</div>
-  </section>
-
-</main>
-
-<footer>
-  <div class="footer-inner">
-    <h3>// class encyclopedia entry</h3>
-    <p>Prepared for the Global Fintech Encyclopedia group activity, PGDM Fintech course. Figures on payment volume, valuation, and market reach are drawn from Stripe's own 2025 annual letter and independent industry reporting as of early-to-mid 2026, and may shift as Stripe reports newer numbers.</p>
-    <div class="footer-meta">
-      <span>Founded 2010 · Patrick &amp; John Collison</span>
-      <span>Palo Alto, CA</span>
-    </div>
-  </div>
-</footer>
-
-<script>
-  const sections = document.querySelectorAll('.section');
-  const revealObserver = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); } });
-  }, {threshold:0.12});
-  sections.forEach(s=>revealObserver.observe(s));
-
-  const tocLinks = document.querySelectorAll('#toc a');
-  const tocObserver = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      const link = document.querySelector('#toc a[data-target="'+entry.target.id+'"]');
-      if(entry.isIntersecting){
-        tocLinks.forEach(l=>l.classList.remove('active'));
-        link.classList.add('active');
-      }
+    // Theme
+    const root = document.documentElement;
+    const themeBtn = $('#themeBtn');
+    const saved = localStorage.getItem('stripe-theme');
+    if(saved){
+      root.setAttribute('data-theme', saved);
+      themeBtn.textContent = saved === 'dark' ? '☀️ Light' : '🌙 Dark';
+    }
+    themeBtn.addEventListener('click', ()=>{
+      const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('stripe-theme', next);
+      themeBtn.textContent = next === 'dark' ? '☀️ Light' : '🌙 Dark';
+      drawAllCharts();
+      initParticles(true);
     });
-  }, {rootMargin:"-40% 0px -55% 0px"});
-  sections.forEach(s=>tocObserver.observe(s));
-</script>
 
+    // Reveal
+    const reveals = $$('.reveal');
+    const revealObs = new IntersectionObserver((entries)=>{
+      entries.forEach((e,i)=>{
+        if(e.isIntersecting){
+          setTimeout(()=>e.target.classList.add('in'), (i%7)*50);
+          revealObs.unobserve(e.target);
+        }
+      });
+    }, {threshold:.14});
+    reveals.forEach(el=>revealObs.observe(el));
+
+    // TOC active
+    const sections = $$('.section, header.hero');
+    const tocLinks = $$('#toc a');
+    const tocObs = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          tocLinks.forEach(a=>a.classList.remove('active'));
+          const link = $(`#toc a[data-target="${entry.target.id}"]`);
+          if(link) link.classList.add('active');
+        }
+      });
+    }, {rootMargin:'-40% 0px -50% 0px'});
+    sections.forEach(s=>tocObs.observe(s));
+
+    // KPI counter
+    function animateCount(el){
+      const target = parseFloat(el.dataset.count || 0);
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      const dec = target % 1 ? 1 : 0;
+      const start = performance.now(), duration = 1200;
+      function frame(now){
+        const p = Math.min((now-start)/duration, 1);
+        const eased = 1 - Math.pow(1-p,3);
+        const val = target*eased;
+        el.textContent = `${prefix}${dec ? val.toFixed(1) : Math.round(val)}${suffix}`;
+        if(p<1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+    const counterObs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          animateCount(e.target);
+          counterObs.unobserve(e.target);
+        }
+      });
+    }, {threshold:.5});
+    $$('.kpi .num[data-count]').forEach(c=>counterObs.observe(c));
+
+    // Tooltip
+    const tooltip = $('#tooltip');
+    const css = (v)=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+    function showTip(e, html){
+      tooltip.innerHTML = html;
+      tooltip.classList.add('show');
+      tooltip.style.left = `${e.clientX+12}px`;
+      tooltip.style.top = `${e.clientY+12}px`;
+    }
+    function hideTip(){ tooltip.classList.remove('show'); }
+
+    // Stripe charts
+    const valuationData = [
+      {label:'2021', value:95},
+      {label:'2023', value:50},
+      {label:'Feb 2025', value:91.5},
+      {label:'Sep 2025', value:106.7},
+      {label:'Feb 2026', value:159}
+    ];
+    const volumeData = [
+      {label:'2021', value:0.64},
+      {label:'2022', value:0.82},
+      {label:'2023', value:1.00},
+      {label:'2024', value:1.42},
+      {label:'2025', value:1.90}
+    ];
+
+    function drawLineChart(svg, data){
+      const W=560,H=280,P={t:20,r:18,b:40,l:44};
+      const iw=W-P.l-P.r, ih=H-P.t-P.b;
+      const max=Math.max(...data.map(d=>d.value))*1.1;
+      const xStep=iw/(data.length-1), x=i=>P.l+i*xStep, y=v=>P.t+ih-(v/max)*ih;
+
+      let html=`<defs>
+        <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="${css('--violet')}"/>
+          <stop offset="60%" stop-color="${css('--pink')}"/>
+          <stop offset="100%" stop-color="${css('--cyan')}"/>
+        </linearGradient>
+        <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="${css('--violet')}" stop-opacity=".26"/>
+          <stop offset="100%" stop-color="${css('--violet')}" stop-opacity="0"/>
+        </linearGradient>
+      </defs>`;
+      for(let i=0;i<5;i++){
+        const gy=P.t+(ih/4)*i;
+        html += `<line x1="${P.l}" y1="${gy}" x2="${W-P.r}" y2="${gy}" stroke="${css('--line')}" stroke-width="1"/>`;
+      }
+
+      const path = data.map((d,i)=>`${i?'L':'M'} ${x(i)} ${y(d.value)}`).join(' ');
+      const area = `${path} L ${x(data.length-1)} ${H-P.b} L ${x(0)} ${H-P.b} Z`;
+      html += `<path d="${area}" fill="url(#areaGrad)"></path>`;
+      html += `<path d="${path}" fill="none" stroke="url(#lineGrad)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"></path>`;
+      data.forEach((d,i)=>{
+        html += `<text x="${x(i)}" y="${H-14}" text-anchor="middle" fill="${css('--text-dim')}" font-size="10" font-family="IBM Plex Mono">${d.label}</text>`;
+      });
+
+      svg.innerHTML=html;
+      data.forEach((d,i)=>{
+        const dot = document.createElementNS('http://www.w3.org/2000/svg','circle');
+        dot.setAttribute('cx',x(i)); dot.setAttribute('cy',y(d.value)); dot.setAttribute('r',5.4);
+        dot.setAttribute('fill',css('--panel-solid')); dot.setAttribute('stroke',css('--violet')); dot.setAttribute('stroke-width',2.4);
+        dot.style.cursor='pointer';
+        dot.addEventListener('mousemove',(e)=>showTip(e,`<strong>${d.label}</strong><br>$${d.value}B valuation`));
+        dot.addEventListener('mouseleave',hideTip);
+        svg.appendChild(dot);
+      });
+    }
+
+    function drawBarChart(svg, data){
+      const W=560,H=280,P={t:20,r:18,b:40,l:44};
+      const iw=W-P.l-P.r, ih=H-P.t-P.b;
+      const max=Math.max(...data.map(d=>d.value))*1.15;
+      const bw=Math.min(62, iw/data.length-22), gap=(iw-bw*data.length)/(data.length+1);
+      let html='';
+      for(let i=0;i<5;i++){
+        const gy=P.t+(ih/4)*i;
+        html += `<line x1="${P.l}" y1="${gy}" x2="${W-P.r}" y2="${gy}" stroke="${css('--line')}" stroke-width="1"/>`;
+      }
+      data.forEach((d,i)=>{
+        const x=P.l+gap+i*(bw+gap);
+        const h=(d.value/max)*ih, y=P.t+ih-h;
+        html += `<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="10" fill="${css('--cyan')}" opacity=".78"></rect>`;
+        html += `<text x="${x+bw/2}" y="${H-14}" text-anchor="middle" fill="${css('--text-dim')}" font-size="10" font-family="IBM Plex Mono">${d.label}</text>`;
+      });
+      svg.innerHTML=html;
+      [...svg.querySelectorAll('rect')].forEach((bar,i)=>{
+        bar.style.cursor='pointer';
+        bar.addEventListener('mousemove',(e)=>showTip(e,`<strong>${data[i].label}</strong><br>$${data[i].value}T volume`));
+        bar.addEventListener('mouseleave',hideTip);
+      });
+    }
+
+    // NEW: live compare chart
+    const compareData = {
+      dev: {label:'Developer Friendliness', stripe:92, paypal:78, adyen:74},
+      enterprise: {label:'Enterprise Penetration', stripe:84, paypal:86, adyen:81},
+      global: {label:'Global Coverage', stripe:88, paypal:91, adyen:83},
+      stack: {label:'Platform Breadth', stripe:90, paypal:79, adyen:76}
+    };
+    let currentMetric = 'dev';
+
+    function drawCompareChart(metric){
+      const svg = $('#compareChart');
+      const d = compareData[metric];
+      const W=760,H=300,P={t:30,r:24,b:44,l:120};
+      const iw=W-P.l-P.r, ih=H-P.t-P.b;
+      const rows = [
+        {name:'Stripe', val:d.stripe, color:css('--stripe')},
+        {name:'PayPal', val:d.paypal, color:css('--paypal')},
+        {name:'Adyen', val:d.adyen, color:css('--adyen')}
+      ];
+
+      let html = '';
+      html += `<text x="${P.l}" y="18" fill="${css('--text-dim')}" font-size="11" font-family="IBM Plex Mono">${d.label} (score /100)</text>`;
+
+      for(let i=0;i<=5;i++){
+        const x=P.l+(iw/5)*i;
+        html += `<line x1="${x}" y1="${P.t}" x2="${x}" y2="${H-P.b}" stroke="${css('--line')}" stroke-width="1"/>`;
+        html += `<text x="${x}" y="${H-18}" text-anchor="middle" fill="${css('--text-dim')}" font-size="10" font-family="IBM Plex Mono">${i*20}</text>`;
+      }
+
+      rows.forEach((r,i)=>{
+        const y = P.t + i*(ih/3) + 18;
+        const barW = (r.val/100) * iw;
+        html += `<text x="${P.l-12}" y="${y+8}" text-anchor="end" fill="${css('--text')}" font-size="13" font-family="Inter" font-weight="600">${r.name}</text>`;
+        html += `<rect x="${P.l}" y="${y-8}" width="${barW}" height="24" rx="10" fill="${r.color}" opacity=".9"></rect>`;
+        html += `<text x="${P.l + barW + 8}" y="${y+8}" fill="${css('--white')}" font-size="12" font-family="IBM Plex Mono">${r.val}</text>`;
+      });
+
+      svg.innerHTML = html;
+
+      // hover tooltips over bars
+      [...svg.querySelectorAll('rect')].forEach((bar,i)=>{
+        const r = rows[i];
+        bar.style.cursor='pointer';
+        bar.addEventListener('mousemove',(e)=>showTip(e,`<strong>${r.name}</strong><br>${d.label}: ${r.val}/100`));
+        bar.addEventListener('mouseleave',hideTip);
+      });
+    }
+
+    function setMetric(metric){
+      currentMetric = metric;
+      $$('.compare-btn').forEach(btn=>btn.classList.toggle('active', btn.dataset.metric===metric));
+      drawCompareChart(metric);
+    }
+
+    $('#compareControls').addEventListener('click', (e)=>{
+      const btn = e.target.closest('.compare-btn');
+      if(!btn) return;
+      setMetric(btn.dataset.metric);
+    });
+
+    // NEW: Auto slider
+    const slidesEl = $('#slides');
+    const dotsEl = $('#dots');
+    const slideCount = $$('.slide', slidesEl).length;
+    let currentSlide = 0;
+    let playing = true;
+    let sliderTimer;
+
+    function renderDots(){
+      dotsEl.innerHTML = '';
+      for(let i=0;i<slideCount;i++){
+        const b = document.createElement('button');
+        b.className = `dot ${i===currentSlide ? 'active' : ''}`;
+        b.setAttribute('aria-label', `Go to slide ${i+1}`);
+        b.addEventListener('click', ()=>goSlide(i, true));
+        dotsEl.appendChild(b);
+      }
+    }
+    function goSlide(index, userAction=false){
+      currentSlide = (index + slideCount) % slideCount;
+      slidesEl.style.transform = `translateX(-${currentSlide*100}%)`;
+      renderDots();
+      if(userAction) restartAuto();
+    }
+    function nextSlide(userAction=false){ goSlide(currentSlide+1, userAction); }
+    function prevSlide(userAction=false){ goSlide(currentSlide-1, userAction); }
+
+    function startAuto(){
+      sliderTimer = setInterval(()=>{ if(playing) nextSlide(); }, 3500);
+    }
+    function restartAuto(){
+      clearInterval(sliderTimer);
+      startAuto();
+    }
+
+    $('#nextSlide').addEventListener('click', ()=>nextSlide(true));
+    $('#prevSlide').addEventListener('click', ()=>prevSlide(true));
+    $('#pauseSlide').addEventListener('click', (e)=>{
+      playing = !playing;
+      e.target.textContent = playing ? 'Pause' : 'Play';
+    });
+
+    renderDots();
+    startAuto();
+
+    // Charts draw all
+    function drawAllCharts(){
+      drawLineChart($('#valuationChart'), valuationData);
+      drawBarChart($('#volumeChart'), volumeData);
+      drawCompareChart(currentMetric);
+    }
+    drawAllCharts();
+
+    let raf;
+    addEventListener('resize', ()=>{
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(()=>{
+        drawAllCharts();
+        initParticles(true);
+      });
+    });
+
+    // NEW: Particle background system
+    const canvas = $('#particleCanvas');
+    const ctx = canvas.getContext('2d', {alpha:true});
+    let particles = [];
+    let particleRAF;
+    let mouse = {x: null, y: null, active:false};
+
+    function hexToRgb(hex){
+      const h = hex.replace('#','').trim();
+      const bigint = parseInt(h.length===3 ? h.split('').map(c=>c+c).join('') : h, 16);
+      return { r:(bigint>>16)&255, g:(bigint>>8)&255, b:bigint&255 };
+    }
+
+    function resizeCanvas(){
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.floor(window.innerWidth * dpr);
+      canvas.height = Math.floor(window.innerHeight * dpr);
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+    }
+
+    function initParticles(reset=false){
+      if(reset) particles = [];
+      resizeCanvas();
+      const count = Math.min(140, Math.floor(window.innerWidth / 10));
+      const c1 = hexToRgb(getComputedStyle(document.documentElement).getPropertyValue('--violet').trim());
+      const c2 = hexToRgb(getComputedStyle(document.documentElement).getPropertyValue('--cyan').trim());
+
+      particles = Array.from({length:count}, (_,i)=>({
+        x: Math.random()*window.innerWidth,
+        y: Math.random()*window.innerHeight,
+        vx: (Math.random()-.5)*0.45,
+        vy: (Math.random()-.5)*0.45,
+        r: Math.random()*1.9 + 0.5,
+        color: i%2===0 ? c1 : c2
+      }));
+    }
+
+    function drawParticles(){
+      ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+
+      // Draw links
+      for(let i=0;i<particles.length;i++){
+        const p = particles[i];
+        for(let j=i+1;j<particles.length;j++){
+          const q = particles[j];
+          const dx = p.x-q.x, dy = p.y-q.y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if(dist < 110){
+            const a = (1 - dist/110) * 0.18;
+            ctx.strokeStyle = `rgba(${p.color.r},${p.color.g},${p.color.b},${a})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(p.x,p.y);
+            ctx.lineTo(q.x,q.y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      particles.forEach(p=>{
+        if(mouse.active && mouse.x!=null){
+          const dx = mouse.x - p.x;
+          const dy = mouse.y - p.y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if(dist < 120){
+            p.vx -= dx * 0.00003;
+            p.vy -= dy * 0.00003;
+          }
+        }
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if(p.x<0 || p.x>window.innerWidth) p.vx *= -1;
+        if(p.y<0 || p.y>window.innerHeight) p.vy *= -1;
+
+        p.vx *= 0.995;
+        p.vy *= 0.995;
+        p.vx += (Math.random()-0.5)*0.002;
+        p.vy += (Math.random()-0.5)*0.002;
+
+        ctx.fillStyle = `rgba(${p.color.r},${p.color.g},${p.color.b},0.75)`;
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fill();
+      });
+
+      particleRAF = requestAnimationFrame(drawParticles);
+    }
+
+    window.addEventListener('mousemove', (e)=>{
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+      mouse.active = true;
+    }, {passive:true});
+    window.addEventListener('mouseleave', ()=>{
+      mouse.active = false;
+    });
+
+    initParticles();
+    drawParticles();
+  </script>
 </body>
 </html>
