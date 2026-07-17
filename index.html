@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stripe — Global Fintech Encyclopedia (V7 Ultra)</title>
+  <title>Stripe — Global Fintech Encyclopedia (V6 Extended)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -12,6 +12,7 @@
       --mono:'IBM Plex Mono', Consolas, monospace;
       --sans:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
+      /* LIGHT THEME (default) */
       --bg:#f6f8ff;
       --bg-soft:#edf2ff;
       --panel:#ffffffcc;
@@ -21,17 +22,12 @@
       --text:#1d2742;
       --text-dim:#5f6e94;
       --white:#0f1730;
-
       --violet:#6b5cff;
       --violet-bright:#5746ff;
       --amber:#e6951f;
       --green:#07b06e;
       --pink:#ff4fa3;
       --cyan:#1ea7ff;
-      --stripe:#635bff;
-      --paypal:#0070e0;
-      --adyen:#0abf53;
-
       --shadow:0 10px 30px rgba(57,74,130,.12);
       --hero-glow: radial-gradient(circle at 20% 10%, rgba(107,92,255,.24), transparent 45%),
                    radial-gradient(circle at 80% 30%, rgba(30,167,255,.20), transparent 40%),
@@ -48,17 +44,12 @@
       --text:#c3cbe0;
       --text-dim:#7c88a8;
       --white:#eef1fa;
-
       --violet:#8f7bff;
       --violet-bright:#a996ff;
       --amber:#ffb454;
       --green:#5fe8a0;
       --pink:#ff7ac6;
       --cyan:#49c7ff;
-      --stripe:#8f7bff;
-      --paypal:#4fa3ff;
-      --adyen:#41de85;
-
       --shadow:0 12px 32px rgba(0,0,0,.36);
       --hero-glow: radial-gradient(circle at 20% 10%, rgba(143,123,255,.20), transparent 45%),
                    radial-gradient(circle at 80% 30%, rgba(73,199,255,.16), transparent 40%),
@@ -81,22 +72,10 @@
     }
 
     .ambient{
-      position:fixed; inset:0; pointer-events:none; z-index:-3;
+      position:fixed; inset:0; pointer-events:none; z-index:-2;
       background:var(--hero-glow);
-      filter:saturate(1.1);
+      filter:saturate(1.15);
     }
-
-    /* NEW: PARTICLE CANVAS */
-    #particleCanvas{
-      position:fixed;
-      inset:0;
-      width:100%;
-      height:100%;
-      z-index:-2;
-      pointer-events:none;
-      opacity:.55;
-    }
-
     .noise{
       position:fixed; inset:0; pointer-events:none; z-index:-1; opacity:.05;
       background-image: radial-gradient(#000 0.5px, transparent 0.5px);
@@ -106,7 +85,7 @@
     .progress{
       position:fixed; top:0; left:0; height:3px; width:0%;
       background:linear-gradient(90deg,var(--violet),var(--pink),var(--cyan));
-      z-index:100;
+      z-index:99;
       transition:width .08s linear;
     }
 
@@ -117,7 +96,7 @@
       backdrop-filter:blur(12px);
     }
     .topbar-inner{
-      max-width:1200px; margin:0 auto;
+      max-width:1180px; margin:0 auto;
       display:flex; align-items:center; justify-content:space-between; gap:14px;
       padding:12px 20px;
     }
@@ -158,7 +137,7 @@
 
     .toc{
       display:flex; gap:2px; overflow:auto; scrollbar-width:none;
-      max-width:min(72vw,900px);
+      max-width:min(72vw,880px);
     }
     .toc::-webkit-scrollbar{display:none}
     .toc a{
@@ -181,8 +160,8 @@
     }
 
     .hero{
-      max-width:1200px; margin:0 auto;
-      padding:68px 20px 46px;
+      max-width:1180px; margin:0 auto;
+      padding:66px 20px 44px;
       border-bottom:1px solid var(--line);
       position:relative;
     }
@@ -208,7 +187,6 @@
       margin-bottom:14px;
     }
     .hero-tag span{color:var(--violet-bright)}
-
     h1{
       font-size:clamp(40px,7vw,72px);
       line-height:1.03;
@@ -216,16 +194,17 @@
       letter-spacing:-.03em;
       color:var(--white);
       margin-bottom:14px;
-      max-width:15ch;
     }
     .gradient-text{
       background:linear-gradient(90deg,var(--violet-bright),var(--pink),var(--cyan));
-      -webkit-background-clip:text; background-clip:text; color:transparent;
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
     }
     .lead{
       font-size:18px;
       color:var(--text);
-      max-width:80ch;
+      max-width:78ch;
       margin-bottom:24px;
     }
 
@@ -238,7 +217,9 @@
       font-size:13px;
       margin-bottom:20px;
     }
-    html[data-theme="dark"] .disclaimer{color:#e7c483}
+    html[data-theme="dark"] .disclaimer{
+      color:#e7c483;
+    }
 
     .hero-kpis{
       display:grid;
@@ -270,7 +251,7 @@
       text-transform:uppercase;
     }
 
-    main{max-width:1200px; margin:0 auto; padding:0 20px}
+    main{max-width:1180px; margin:0 auto; padding:0 20px}
     .section{
       padding:56px 0;
       border-bottom:1px solid var(--line);
@@ -297,13 +278,16 @@
       margin-bottom:14px;
       max-width:85ch;
     }
+    .section strong{color:var(--white)}
 
     .reveal{
       opacity:0;
       transform:translateY(16px);
       transition:.62s cubic-bezier(.2,.7,.3,1);
     }
-    .reveal.in{opacity:1; transform:translateY(0)}
+    .reveal.in{
+      opacity:1; transform:translateY(0);
+    }
 
     .glass{
       background:var(--panel);
@@ -313,15 +297,40 @@
       backdrop-filter:blur(8px);
     }
 
-    .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:16px}
+    .callout{
+      border-left:3px solid var(--violet);
+      padding:16px 18px;
+      margin-top:18px;
+      font-size:14.8px;
+    }
+    .callout strong{color:var(--violet-bright)}
+
+    .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:16px;}
+    .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:16px;}
     .card{
       padding:16px;
       border:1px solid var(--line);
       border-radius:12px;
       background:var(--panel-solid);
     }
-    .card h3{font-size:16px; color:var(--white); margin-bottom:8px}
-    .card p{font-size:14px; margin:0; color:var(--text)}
+    .card h3{font-size:16px; color:var(--white); margin-bottom:8px;}
+    .card p{font-size:14px; margin:0; color:var(--text);}
+
+    .term-list{margin-top:10px}
+    .term{
+      display:flex; gap:12px; align-items:flex-start;
+      padding:10px 0; border-top:1px solid var(--line);
+      flex-wrap:wrap;
+    }
+    .term:first-child{border-top:none}
+    .term .tag{
+      min-width:180px;
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--amber);
+      font-weight:700;
+    }
+    .term .def{flex:1; min-width:220px; font-size:14px; color:var(--text-dim)}
 
     .founder-grid{
       display:grid;
@@ -355,76 +364,52 @@
     }
     .founder p{font-size:14px; margin:0; color:var(--text)}
 
-    /* NEW: Auto milestones slider */
-    .slider-wrap{
-      margin-top:16px;
-      position:relative;
-      overflow:hidden;
-      border:1px solid var(--line);
-      border-radius:14px;
-      background:var(--panel);
-      box-shadow:var(--shadow);
-    }
-    .slides{
-      display:flex;
-      transition:transform .6s cubic-bezier(.22,.7,.25,1);
-      width:100%;
-    }
-    .slide{
-      min-width:100%;
-      padding:24px 22px 22px;
+    .timeline{display:grid; gap:10px; margin-top:16px}
+    .tl{
       display:grid;
       grid-template-columns:120px 1fr;
-      gap:14px;
-      align-items:flex-start;
-    }
-    .slide-year{
-      font-family:var(--mono);
-      font-size:26px;
-      font-weight:700;
-      color:var(--violet-bright);
-      line-height:1.1;
-    }
-    .slide h3{
-      color:var(--white);
-      font-size:20px;
-      margin-bottom:6px;
-    }
-    .slide p{
-      margin:0;
-      font-size:15px;
-      color:var(--text);
-      max-width:70ch;
-    }
-    .slider-controls{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
+      gap:12px;
       padding:12px 14px;
-      border-top:1px solid var(--line);
-      background:var(--panel-solid);
-    }
-    .slider-btns{display:flex; gap:8px}
-    .slider-btn{
       border:1px solid var(--line);
+      border-radius:10px;
       background:var(--panel);
-      color:var(--text);
-      border-radius:8px;
-      padding:6px 10px;
+    }
+    .tl .year{
       font-family:var(--mono);
-      font-size:11px;
-      cursor:pointer;
-      transition:.2s;
+      color:var(--violet-bright);
+      font-weight:700;
     }
-    .slider-btn:hover{border-color:var(--violet); color:var(--violet-bright)}
-    .dots{display:flex; gap:6px; flex-wrap:wrap}
-    .dot{
-      width:8px; height:8px; border-radius:50%;
-      background:color-mix(in srgb, var(--text-dim) 30%, transparent);
-      border:none; cursor:pointer; padding:0;
+
+    .table-wrap{
+      margin-top:18px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
     }
-    .dot.active{background:var(--violet)}
+    table{
+      width:100%;
+      border-collapse:collapse;
+      font-family:var(--mono);
+      font-size:12px;
+    }
+    th{
+      text-align:left;
+      background:var(--panel-hi);
+      color:var(--text-dim);
+      padding:10px 12px;
+      font-size:10.5px;
+      letter-spacing:.05em;
+      text-transform:uppercase;
+      border-bottom:1px solid var(--line);
+    }
+    td{
+      padding:10px 12px;
+      border-bottom:1px solid var(--line);
+      background:var(--panel-solid);
+      color:var(--text);
+    }
+    tr:last-child td{border-bottom:none}
 
     .chart-wrap{
       margin-top:20px;
@@ -450,29 +435,9 @@
       width:9px; height:9px; border-radius:50%;
       display:inline-block; margin-right:6px;
     }
-
-    .compare-controls{
-      display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 8px;
-    }
-    .compare-btn{
-      border:1px solid var(--line);
-      background:var(--panel-solid);
-      color:var(--text);
-      border-radius:999px;
-      padding:6px 10px;
-      font-family:var(--mono);
-      font-size:11px;
-      cursor:pointer;
-    }
-    .compare-btn.active{
-      border-color:var(--violet);
-      color:var(--violet-bright);
-      background:color-mix(in srgb,var(--violet) 10%, transparent);
-    }
-
     .tooltip{
       position:fixed;
-      z-index:210;
+      z-index:200;
       pointer-events:none;
       opacity:0;
       transform:translateY(6px);
@@ -487,11 +452,43 @@
     }
     .tooltip.show{opacity:1; transform:translateY(0)}
 
+    .status-badge{
+      display:inline-flex; align-items:center; gap:8px;
+      border:1px solid color-mix(in srgb,var(--green) 40%, var(--line));
+      background:color-mix(in srgb,var(--green) 10%, transparent);
+      color:var(--green);
+      border-radius:999px;
+      padding:6px 12px;
+      font-family:var(--mono);
+      font-size:12px;
+      margin-bottom:14px;
+    }
+
+    .faq{margin-top:14px; display:grid; gap:10px}
+    details{
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:var(--panel);
+      padding:10px 12px;
+    }
+    summary{
+      cursor:pointer;
+      font-weight:600;
+      color:var(--white);
+      list-style:none;
+    }
+    summary::-webkit-details-marker{display:none}
+    details p{
+      margin:8px 0 0;
+      font-size:14px;
+      color:var(--text-dim);
+    }
+
     footer{
       border-top:1px solid var(--line);
       padding:36px 20px;
     }
-    .footer-inner{max-width:1200px; margin:0 auto}
+    .footer-inner{max-width:1180px; margin:0 auto}
     .footer-inner h3{
       font-family:var(--mono);
       font-size:12px;
@@ -513,18 +510,19 @@
       .hero-kpis{grid-template-columns:repeat(3,1fr)}
     }
     @media (max-width:920px){
-      .chart-wrap,.founder-grid{grid-template-columns:1fr}
+      .chart-wrap,.grid-2,.founder-grid{grid-template-columns:1fr}
       .grid-3{grid-template-columns:1fr}
       .hero-kpis{grid-template-columns:repeat(2,1fr)}
-      .slide{grid-template-columns:1fr}
     }
     @media (max-width:740px){
       .toc{display:none}
       .founder{grid-template-columns:78px 1fr}
       .founder img{width:78px; height:78px}
+      .tl{grid-template-columns:90px 1fr}
+      .term .tag{min-width:100%}
     }
 
-    a:focus-visible, button:focus-visible{
+    a:focus-visible, button:focus-visible, summary:focus-visible{
       outline:2px solid var(--violet);
       outline-offset:2px;
     }
@@ -532,195 +530,308 @@
 </head>
 <body>
   <div class="ambient"></div>
-  <canvas id="particleCanvas"></canvas>
   <div class="noise"></div>
   <div class="progress" id="progress"></div>
   <div class="tooltip" id="tooltip"></div>
 
   <nav class="topbar">
     <div class="topbar-inner">
-      <div class="brand"><span class="brand-dot"></span> stripe.entry / v7 ultra</div>
+      <div class="brand"><span class="brand-dot"></span> stripe.entry / v6 extended</div>
       <div class="toolbar">
         <button class="theme-btn" id="themeBtn">🌙 Dark</button>
         <div class="toc" id="toc">
-          <a href="#intro" data-target="intro">01 Intro</a>
+          <a href="#friction" data-target="friction">01 Friction</a>
           <a href="#founders" data-target="founders">02 Founders</a>
-          <a href="#products" data-target="products">03 Products</a>
-          <a href="#milestones" data-target="milestones">04 Milestones</a>
-          <a href="#charts" data-target="charts">05 Charts</a>
-          <a href="#compare" data-target="compare">06 Compare</a>
+          <a href="#model" data-target="model">03 Model</a>
+          <a href="#products" data-target="products">04 Products</a>
+          <a href="#economics" data-target="economics">05 Economics</a>
+          <a href="#scale" data-target="scale">06 Scale</a>
+          <a href="#charts" data-target="charts">07 Charts</a>
+          <a href="#status" data-target="status">08 Status</a>
+          <a href="#faq" data-target="faq">09 FAQ</a>
         </div>
       </div>
     </div>
   </nav>
 
-  <header class="hero" id="intro">
-    <div class="hero-tag"><span>//</span> fintech encyclopedia · interactive ultra edition</div>
-    <h1>Stripe as <span class="gradient-text">internet-scale</span> financial infrastructure</h1>
+  <header class="hero">
+    <div class="hero-tag"><span>//</span> dev/payments · founded 2010 · fintech encyclopedia entry</div>
+    <h1>Stripe — the <span class="gradient-text">commerce infrastructure layer</span> of the internet</h1>
     <p class="lead">
-      Stripe transformed digital monetization by abstracting payment complexity into developer tooling.
-      This upgraded profile includes a particle system, auto-playing milestone slider, and live competitor mini chart.
+      Stripe turned online payments from a multi-week banking integration into a software workflow. What started as a developer-first API in 2010 has evolved into a broad financial operating system for internet businesses.
     </p>
 
     <div class="disclaimer">
-      <strong>Data note:</strong> Stripe is private; selected figures are educational estimates/commonly cited values used for classroom analysis.
+      <strong>Note on figures:</strong> Stripe is privately held and does not publish full public-company style financial statements. Numbers below combine company communications and credible reporting estimates through 2026.
     </div>
 
     <div class="hero-kpis">
-      <div class="kpi reveal"><div class="num" data-count="1.9" data-prefix="$" data-suffix="T">$0T</div><div class="lbl">2025 Volume</div></div>
-      <div class="kpi reveal"><div class="num" data-count="159" data-prefix="$" data-suffix="B">$0B</div><div class="lbl">Valuation (2026)</div></div>
-      <div class="kpi reveal"><div class="num" data-count="46" data-suffix="+">0+</div><div class="lbl">Direct Countries</div></div>
-      <div class="kpi reveal"><div class="num" data-count="195">0</div><div class="lbl">Sell-into Countries</div></div>
+      <div class="kpi reveal"><div class="num" data-count="1.9" data-prefix="$" data-suffix="T">$0T</div><div class="lbl">2025 Payment Volume</div></div>
+      <div class="kpi reveal"><div class="num" data-count="159" data-prefix="$" data-suffix="B">$0B</div><div class="lbl">Valuation (Feb 2026)</div></div>
+      <div class="kpi reveal"><div class="num" data-count="46" data-suffix="+">0+</div><div class="lbl">Countries with Direct Stripe</div></div>
+      <div class="kpi reveal"><div class="num" data-count="195">0</div><div class="lbl">Countries Businesses Can Sell Into</div></div>
       <div class="kpi reveal"><div class="num" data-count="5" data-suffix="M+">0M+</div><div class="lbl">Businesses Served</div></div>
     </div>
   </header>
 
   <main>
+    <section class="section" id="friction">
+      <div class="section-num reveal">Section 01</div>
+      <h2 class="reveal">The Original Problem: “Getting Paid” Was Harder Than Building</h2>
+      <p class="reveal">
+        In the late 2000s and early 2010s, online payments were fragmented across banks, card networks, gateways, and compliance requirements. A startup could build a functional web product quickly, but monetization often required contracts, underwriting, and legacy tooling.
+      </p>
+      <p class="reveal">
+        Stripe’s early breakthrough wasn’t inventing digital payments — it was reducing integration friction. The company offered clear APIs, better documentation, clean developer ergonomics, and an onboarding flow designed around software teams rather than bank ops teams.
+      </p>
+      <p class="reveal">
+        That seemingly simple shift changed startup velocity: teams could test pricing, run checkout experiments, and launch subscription products faster because payment infrastructure stopped being the blocking dependency.
+      </p>
+      <div class="callout glass reveal">
+        <strong>Why this mattered:</strong> Stripe captured value by compressing “time to first transaction.” For many startups, that was the difference between idea and revenue.
+      </div>
+    </section>
+
     <section class="section" id="founders">
       <div class="section-num reveal">Section 02</div>
-      <h2 class="reveal">Founders</h2>
-      <p class="reveal">Patrick and John Collison built Stripe around developer experience, clean APIs, and rapid product iteration.</p>
+      <h2 class="reveal">Founders, Background, and Early DNA</h2>
+      <p class="reveal">
+        Patrick and John Collison grew up in Ireland, both deeply technical from a young age. Before Stripe, they built and sold Auctomatic, then continued building software projects where the same payment bottleneck kept appearing.
+      </p>
 
       <div class="founder-grid">
         <article class="founder glass reveal">
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Patrick_Collison_2019.jpg/440px-Patrick_Collison_2019.jpg" alt="Patrick Collison">
           <div>
             <h3>Patrick Collison</h3>
-            <div class="meta">Co-founder · CEO</div>
-            <p>Leads long-term strategy, product direction, and infrastructure expansion.</p>
+            <div class="meta">Co-founder · Chief Executive Officer</div>
+            <p>Leads long-term company strategy, product architecture direction, and Stripe’s infrastructure-first expansion across global commerce rails.</p>
           </div>
         </article>
+
         <article class="founder glass reveal">
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/John_Collison_%282019%29.jpg/440px-John_Collison_%282019%29.jpg" alt="John Collison">
           <div>
             <h3>John Collison</h3>
             <div class="meta">Co-founder · President</div>
-            <p>Focused on execution, global operating scale, and adjacent product lines.</p>
+            <p>Drives operating execution, scale programs, and strategic product rollout across payments, billing, treasury-like, and platform tools.</p>
           </div>
         </article>
+      </div>
+
+      <div class="term-list glass reveal" style="padding:12px 14px; margin-top:14px;">
+        <div class="term">
+          <div class="tag">/dev/payments</div>
+          <div class="def">Stripe’s internal early working name, reflecting a developer-native orientation from day one.</div>
+        </div>
+        <div class="term">
+          <div class="tag">YC trajectory</div>
+          <div class="def">The startup emerged in the Y Combinator ecosystem, where fast iteration and product distribution helped early adoption.</div>
+        </div>
+        <div class="term">
+          <div class="tag">Product philosophy</div>
+          <div class="def">API clarity, reliability, and abstraction over financial complexity became Stripe’s core competitive identity.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="model">
+      <div class="section-num reveal">Section 03</div>
+      <h2 class="reveal">Business Model: A Toll on Digital Commerce Flow</h2>
+      <p class="reveal">
+        Stripe’s core revenue engine is transaction-linked: when customers process payments, Stripe earns a portion of payment fees while passing through network and issuing-bank costs. This means Stripe’s top-line momentum naturally tracks merchant volume growth.
+      </p>
+
+      <div class="grid-2">
+        <div class="card reveal">
+          <h3>1) Payments Core</h3>
+          <p>Card and local method processing fees are the foundation. This includes authorization, routing, retries, and settlement orchestration.</p>
+        </div>
+        <div class="card reveal">
+          <h3>2) Software Layers</h3>
+          <p>Billing, invoicing, checkout, tax, fraud prevention, and identity layers expand Stripe from “processor” into “commerce OS.”</p>
+        </div>
+        <div class="card reveal">
+          <h3>3) Platform Monetization</h3>
+          <p>Marketplaces and SaaS platforms monetize via Stripe Connect while Stripe earns from distributed payment and payout activity.</p>
+        </div>
+        <div class="card reveal">
+          <h3>4) Financial Workflows</h3>
+          <p>Treasury-like and issuing capabilities move Stripe further up the value chain into broader money movement operations.</p>
+        </div>
+      </div>
+
+      <div class="callout glass reveal">
+        <strong>Model strength:</strong> usage-based economics + high developer switching friction + deep workflow embedding can create durable recurring infrastructure revenue.
       </div>
     </section>
 
     <section class="section" id="products">
-      <div class="section-num reveal">Section 03</div>
-      <h2 class="reveal">Product Stack</h2>
+      <div class="section-num reveal">Section 04</div>
+      <h2 class="reveal">Product Ecosystem: Beyond Payment Acceptance</h2>
+      <p class="reveal">
+        Stripe’s expansion strategy has been systematic: begin with payment APIs, then layer adjacent products that solve next-order merchant problems (fraud, subscriptions, global tax, payout orchestration, and embedded finance).
+      </p>
+
       <div class="grid-3">
-        <div class="card reveal"><h3>Payments</h3><p>Global acceptance and routing for cards + local methods.</p></div>
-        <div class="card reveal"><h3>Billing</h3><p>Subscription lifecycle, invoicing, metering, recurring logic.</p></div>
-        <div class="card reveal"><h3>Radar</h3><p>Fraud scoring and custom rules for abuse prevention.</p></div>
+        <div class="card reveal"><h3>Payments</h3><p>Global payment method acceptance, card tokenization, retries, and checkout conversion tooling.</p></div>
+        <div class="card reveal"><h3>Checkout</h3><p>Prebuilt conversion-optimized checkout surfaces that reduce implementation time and improve payment success rates.</p></div>
+        <div class="card reveal"><h3>Elements</h3><p>Composable UI primitives for custom payment UX with strong compliance and wallet support.</p></div>
+        <div class="card reveal"><h3>Radar</h3><p>Machine-learning fraud scoring and custom rules for chargeback and abuse risk management.</p></div>
+        <div class="card reveal"><h3>Billing</h3><p>Subscriptions, usage metering, proration, revenue-cycle operations, and recurring billing automation.</p></div>
+        <div class="card reveal"><h3>Invoicing</h3><p>Invoice workflows for B2B and hybrid monetization models with hosted payment collection.</p></div>
+        <div class="card reveal"><h3>Connect</h3><p>Marketplace and platform payouts, onboarding, KYC/KYB controls, and multi-party money movement.</p></div>
+        <div class="card reveal"><h3>Tax</h3><p>Automated sales tax / VAT calculations and compliance-aware checkout experiences.</p></div>
+        <div class="card reveal"><h3>Atlas</h3><p>Startup formation and setup product that captures founders at company inception.</p></div>
       </div>
     </section>
 
-    <!-- NEW: AUTO-PLAYING MILESTONES SLIDER -->
-    <section class="section" id="milestones">
-      <div class="section-num reveal">Section 04</div>
-      <h2 class="reveal">Auto-Playing Milestones Slider</h2>
-      <p class="reveal">Slides auto-advance every 3.5s. You can manually navigate with arrows or dots.</p>
+    <section class="section" id="economics">
+      <div class="section-num reveal">Section 05</div>
+      <h2 class="reveal">Economics & Competitive Positioning</h2>
+      <p class="reveal">
+        Stripe operates in a highly competitive landscape with legacy processors, acquirers, and newer fintech platforms. Its edge has historically come from developer velocity, high-quality docs, clean APIs, and rapid shipping cadence.
+      </p>
 
-      <div class="slider-wrap reveal" id="milestoneSlider">
-        <div class="slides" id="slides">
-          <article class="slide">
-            <div class="slide-year">2010</div>
-            <div>
-              <h3>Stripe Founded</h3>
-              <p>Founded in Palo Alto with a developer-first thesis: make online payments programmable and simple.</p>
-            </div>
-          </article>
-          <article class="slide">
-            <div class="slide-year">2011</div>
-            <div>
-              <h3>Public Launch</h3>
-              <p>Launches broadly after private beta, gaining traction among startups and software businesses.</p>
-            </div>
-          </article>
-          <article class="slide">
-            <div class="slide-year">2021</div>
-            <div>
-              <h3>Scale Inflection</h3>
-              <p>Reaches major private-market valuation highs as digital commerce infrastructure demand rises globally.</p>
-            </div>
-          </article>
-          <article class="slide">
-            <div class="slide-year">2023</div>
-            <div>
-              <h3>Market Reset</h3>
-              <p>Valuation resets with macro tightening, while operating depth and product expansion continue.</p>
-            </div>
-          </article>
-          <article class="slide">
-            <div class="slide-year">2026</div>
-            <div>
-              <h3>$159B Tender Signal</h3>
-              <p>Tender-driven pricing suggests renewed confidence in Stripe’s long-term infrastructure trajectory.</p>
-            </div>
-          </article>
-        </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead>
+            <tr>
+              <th>Dimension</th>
+              <th>Stripe Position</th>
+              <th>Strategic Implication</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Integration speed</td>
+              <td>High</td>
+              <td>Faster time-to-revenue for startups and product teams</td>
+            </tr>
+            <tr>
+              <td>Global method depth</td>
+              <td>Strong</td>
+              <td>Supports localization and international expansion</td>
+            </tr>
+            <tr>
+              <td>Platform ecosystem</td>
+              <td>Broad</td>
+              <td>Higher product stickiness across workflows</td>
+            </tr>
+            <tr>
+              <td>Pricing pressure risk</td>
+              <td>Moderate</td>
+              <td>Requires constant differentiation via software value-add</td>
+            </tr>
+            <tr>
+              <td>Private-market flexibility</td>
+              <td>High</td>
+              <td>Allows long-horizon product bets without quarterly market pressure</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-        <div class="slider-controls">
-          <div class="slider-btns">
-            <button class="slider-btn" id="prevSlide">← Prev</button>
-            <button class="slider-btn" id="nextSlide">Next →</button>
-            <button class="slider-btn" id="pauseSlide">Pause</button>
-          </div>
-          <div class="dots" id="dots"></div>
-        </div>
+      <div class="callout glass reveal">
+        <strong>Competitive lens:</strong> Stripe is strongest where payment processing is tightly bundled with developer tooling and monetization logic, not just raw transaction routing.
+      </div>
+    </section>
+
+    <section class="section" id="scale">
+      <div class="section-num reveal">Section 06</div>
+      <h2 class="reveal">Scale, Reach, and Milestone Timeline</h2>
+      <p class="reveal">
+        Stripe’s trajectory reflects a classic infrastructure pattern: early adoption among startups, then expansion into enterprise and platform use-cases, and finally deeper financial product layering.
+      </p>
+
+      <div class="timeline">
+        <div class="tl reveal"><div class="year">2010</div><div>Company founded in Palo Alto by Patrick and John Collison.</div></div>
+        <div class="tl reveal"><div class="year">2011</div><div>Public launch after private beta; developer word-of-mouth drives early traction.</div></div>
+        <div class="tl reveal"><div class="year">2014–2018</div><div>Rapid product expansion: global methods, marketplace tooling, and anti-fraud sophistication.</div></div>
+        <div class="tl reveal"><div class="year">2019–2021</div><div>Major scale period; valuation climbs sharply with global digital commerce acceleration.</div></div>
+        <div class="tl reveal"><div class="year">2023</div><div>Private-market valuation reset as macro conditions tighten fintech multiples.</div></div>
+        <div class="tl reveal"><div class="year">2025</div><div>~$1.9T payment volume (reported), showing continued operating scale.</div></div>
+        <div class="tl reveal"><div class="year">2026</div><div>Tender offer implies ~$159B valuation, signaling renewed private-market confidence.</div></div>
       </div>
     </section>
 
     <section class="section" id="charts">
-      <div class="section-num reveal">Section 05</div>
-      <h2 class="reveal">Interactive Stripe Data</h2>
-      <p class="reveal">Hover points and bars for exact values.</p>
+      <div class="section-num reveal">Section 07</div>
+      <h2 class="reveal">Interactive Data Visualizations</h2>
+      <p class="reveal">
+        Hover over data points and bars for exact values. Charts are rendered in pure SVG for responsiveness and speed.
+      </p>
 
       <div class="chart-wrap">
         <div class="chart-card glass reveal">
-          <div class="chart-title">Stripe Valuation Trend (USD Billions)</div>
-          <svg id="valuationChart" viewBox="0 0 560 280" width="100%"></svg>
+          <div class="chart-title">Valuation Path (USD Billions)</div>
+          <svg id="valuationChart" viewBox="0 0 560 280" width="100%" role="img" aria-label="Valuation line chart"></svg>
           <div class="chart-legend">
             <span><span class="legend-dot" style="background:var(--violet)"></span> Valuation</span>
           </div>
         </div>
 
         <div class="chart-card glass reveal">
-          <div class="chart-title">Stripe Payment Volume (USD Trillions)</div>
-          <svg id="volumeChart" viewBox="0 0 560 280" width="100%"></svg>
+          <div class="chart-title">Payment Volume (USD Trillions)</div>
+          <svg id="volumeChart" viewBox="0 0 560 280" width="100%" role="img" aria-label="Volume bar chart"></svg>
           <div class="chart-legend">
-            <span><span class="legend-dot" style="background:var(--cyan)"></span> Annual volume</span>
+            <span><span class="legend-dot" style="background:var(--cyan)"></span> Annual Volume</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- NEW: LIVE COMPARISON MINI CHART -->
-    <section class="section" id="compare">
-      <div class="section-num reveal">Section 06</div>
-      <h2 class="reveal">Live Mini Comparison: Stripe vs PayPal vs Adyen</h2>
-      <p class="reveal">Switch metric to compare profile differences (illustrative educational benchmark values).</p>
+    <section class="section" id="status">
+      <div class="section-num reveal">Section 08</div>
+      <h2 class="reveal">Status in 2026: Private, Profitable Orientation, Expanding Surface Area</h2>
+      <div class="status-badge reveal">● Independent & Operating</div>
+      <p class="reveal">
+        Stripe remains privately held and appears to prioritize controlled compounding over short-term signaling. Rather than narrowing scope, the company has continued building additional rails and software layers around money movement.
+      </p>
+      <p class="reveal">
+        Strategic themes include: enterprise-grade reliability, broader global reach, deeper financial primitives, and new commerce interfaces shaped by automation/AI-driven purchasing flows.
+      </p>
+      <p class="reveal">
+        For founders and operators, Stripe’s current posture suggests it wants to be the default orchestration substrate for internet revenue — not only a checkout button.
+      </p>
+      <div class="callout glass reveal">
+        <strong>Bottom line:</strong> Stripe’s moat is not one fee line item; it is the integrated stack that sits between product code, global regulations, payment rails, and revenue operations.
+      </div>
+    </section>
 
-      <div class="glass chart-card reveal">
-        <div class="compare-controls" id="compareControls">
-          <button class="compare-btn active" data-metric="dev">Developer Friendliness</button>
-          <button class="compare-btn" data-metric="enterprise">Enterprise Penetration</button>
-          <button class="compare-btn" data-metric="global">Global Coverage</button>
-          <button class="compare-btn" data-metric="stack">Platform Breadth</button>
-        </div>
-        <svg id="compareChart" viewBox="0 0 760 300" width="100%"></svg>
-        <div class="chart-legend">
-          <span><span class="legend-dot" style="background:var(--stripe)"></span> Stripe</span>
-          <span><span class="legend-dot" style="background:var(--paypal)"></span> PayPal</span>
-          <span><span class="legend-dot" style="background:var(--adyen)"></span> Adyen</span>
-        </div>
+    <section class="section" id="faq">
+      <div class="section-num reveal">Section 09</div>
+      <h2 class="reveal">Quick FAQ</h2>
+      <div class="faq">
+        <details class="reveal">
+          <summary>Is Stripe a bank?</summary>
+          <p>No. Stripe is primarily a financial infrastructure and software platform that partners with regulated banking and payment entities where required.</p>
+        </details>
+        <details class="reveal">
+          <summary>Why do developers prefer Stripe?</summary>
+          <p>Historically: strong documentation, clean APIs, fast sandbox-to-production path, and broad tooling around payments lifecycle operations.</p>
+        </details>
+        <details class="reveal">
+          <summary>Does Stripe only serve startups?</summary>
+          <p>No. It serves both early-stage companies and large enterprises/platforms, often with different integration depth and product mix.</p>
+        </details>
+        <details class="reveal">
+          <summary>Why hasn’t Stripe gone public yet?</summary>
+          <p>As a private company, it can pursue longer-term product decisions and use tender offers for liquidity without full public listing requirements.</p>
+        </details>
       </div>
     </section>
   </main>
 
   <footer>
     <div class="footer-inner">
-      <h3>// fintech encyclopedia · ultra interactive profile</h3>
-      <p>This version includes animated particles, auto-slider milestones, and a live comparative mini chart.</p>
+      <h3>// global fintech encyclopedia · extended profile</h3>
+      <p>
+        Educational profile prepared for fintech coursework. Values and milestone references are best-effort estimates for learning use, based on company letters and market reporting available through 2026.
+      </p>
       <div class="footer-meta">
-        <span>Prepared for classroom presentation</span>
-        <span>Version V7 · Interactive</span>
+        <span>Founded 2010 · Patrick & John Collison · Palo Alto</span>
+        <span>Updated for class use · 2026</span>
       </div>
     </div>
   </footer>
@@ -729,16 +840,17 @@
     const $ = (q,r=document)=>r.querySelector(q);
     const $$ = (q,r=document)=>[...r.querySelectorAll(q)];
 
-    // Progress
+    // Scroll progress
     const progressBar = $('#progress');
     function updateProgress(){
       const h = document.documentElement;
-      progressBar.style.width = `${Math.max(0,Math.min((h.scrollTop/(h.scrollHeight-h.clientHeight))*100,100))}%`;
+      const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100;
+      progressBar.style.width = `${Math.max(0,Math.min(scrolled,100))}%`;
     }
     addEventListener('scroll', updateProgress, {passive:true});
     updateProgress();
 
-    // Theme
+    // Theme toggle
     const root = document.documentElement;
     const themeBtn = $('#themeBtn');
     const saved = localStorage.getItem('stripe-theme');
@@ -752,7 +864,6 @@
       localStorage.setItem('stripe-theme', next);
       themeBtn.textContent = next === 'dark' ? '☀️ Light' : '🌙 Dark';
       drawAllCharts();
-      initParticles(true);
     });
 
     // Reveal
@@ -767,8 +878,8 @@
     }, {threshold:.14});
     reveals.forEach(el=>revealObs.observe(el));
 
-    // TOC active
-    const sections = $$('.section, header.hero');
+    // Active TOC
+    const sections = $$('.section');
     const tocLinks = $$('#toc a');
     const tocObs = new IntersectionObserver((entries)=>{
       entries.forEach(entry=>{
@@ -787,11 +898,12 @@
       const prefix = el.dataset.prefix || '';
       const suffix = el.dataset.suffix || '';
       const dec = target % 1 ? 1 : 0;
-      const start = performance.now(), duration = 1200;
+      const start = performance.now();
+      const duration = 1200;
       function frame(now){
         const p = Math.min((now-start)/duration, 1);
-        const eased = 1 - Math.pow(1-p,3);
-        const val = target*eased;
+        const eased = 1 - Math.pow(1-p, 3);
+        const val = target * eased;
         el.textContent = `${prefix}${dec ? val.toFixed(1) : Math.round(val)}${suffix}`;
         if(p<1) requestAnimationFrame(frame);
       }
@@ -807,18 +919,8 @@
     }, {threshold:.5});
     $$('.kpi .num[data-count]').forEach(c=>counterObs.observe(c));
 
-    // Tooltip
+    // Charts
     const tooltip = $('#tooltip');
-    const css = (v)=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
-    function showTip(e, html){
-      tooltip.innerHTML = html;
-      tooltip.classList.add('show');
-      tooltip.style.left = `${e.clientX+12}px`;
-      tooltip.style.top = `${e.clientY+12}px`;
-    }
-    function hideTip(){ tooltip.classList.remove('show'); }
-
-    // Stripe charts
     const valuationData = [
       {label:'2021', value:95},
       {label:'2023', value:50},
@@ -833,42 +935,61 @@
       {label:'2024', value:1.42},
       {label:'2025', value:1.90}
     ];
+    const css = (v)=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+    function showTip(e, html){
+      tooltip.innerHTML = html;
+      tooltip.classList.add('show');
+      tooltip.style.left = `${e.clientX+12}px`;
+      tooltip.style.top = `${e.clientY+12}px`;
+    }
+    function hideTip(){ tooltip.classList.remove('show'); }
 
     function drawLineChart(svg, data){
       const W=560,H=280,P={t:20,r:18,b:40,l:44};
       const iw=W-P.l-P.r, ih=H-P.t-P.b;
       const max=Math.max(...data.map(d=>d.value))*1.1;
-      const xStep=iw/(data.length-1), x=i=>P.l+i*xStep, y=v=>P.t+ih-(v/max)*ih;
+      const xStep=iw/(data.length-1);
+      const x=i=>P.l+i*xStep;
+      const y=v=>P.t+ih-(v/max)*ih;
 
-      let html=`<defs>
-        <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="${css('--violet')}"/>
-          <stop offset="60%" stop-color="${css('--pink')}"/>
-          <stop offset="100%" stop-color="${css('--cyan')}"/>
-        </linearGradient>
-        <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="${css('--violet')}" stop-opacity=".26"/>
-          <stop offset="100%" stop-color="${css('--violet')}" stop-opacity="0"/>
-        </linearGradient>
-      </defs>`;
+      let html=`
+        <defs>
+          <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="${css('--violet')}"/>
+            <stop offset="60%" stop-color="${css('--pink')}"/>
+            <stop offset="100%" stop-color="${css('--cyan')}"/>
+          </linearGradient>
+          <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="${css('--violet')}" stop-opacity=".26"/>
+            <stop offset="100%" stop-color="${css('--violet')}" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+      `;
       for(let i=0;i<5;i++){
         const gy=P.t+(ih/4)*i;
-        html += `<line x1="${P.l}" y1="${gy}" x2="${W-P.r}" y2="${gy}" stroke="${css('--line')}" stroke-width="1"/>`;
+        html+=`<line x1="${P.l}" y1="${gy}" x2="${W-P.r}" y2="${gy}" stroke="${css('--line')}" stroke-width="1"/>`;
       }
 
       const path = data.map((d,i)=>`${i?'L':'M'} ${x(i)} ${y(d.value)}`).join(' ');
       const area = `${path} L ${x(data.length-1)} ${H-P.b} L ${x(0)} ${H-P.b} Z`;
       html += `<path d="${area}" fill="url(#areaGrad)"></path>`;
       html += `<path d="${path}" fill="none" stroke="url(#lineGrad)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"></path>`;
+
       data.forEach((d,i)=>{
         html += `<text x="${x(i)}" y="${H-14}" text-anchor="middle" fill="${css('--text-dim')}" font-size="10" font-family="IBM Plex Mono">${d.label}</text>`;
       });
 
       svg.innerHTML=html;
+
       data.forEach((d,i)=>{
         const dot = document.createElementNS('http://www.w3.org/2000/svg','circle');
-        dot.setAttribute('cx',x(i)); dot.setAttribute('cy',y(d.value)); dot.setAttribute('r',5.4);
-        dot.setAttribute('fill',css('--panel-solid')); dot.setAttribute('stroke',css('--violet')); dot.setAttribute('stroke-width',2.4);
+        dot.setAttribute('cx',x(i));
+        dot.setAttribute('cy',y(d.value));
+        dot.setAttribute('r',5.4);
+        dot.setAttribute('fill',css('--panel-solid'));
+        dot.setAttribute('stroke',css('--violet'));
+        dot.setAttribute('stroke-width',2.4);
         dot.style.cursor='pointer';
         dot.addEventListener('mousemove',(e)=>showTip(e,`<strong>${d.label}</strong><br>$${d.value}B valuation`));
         dot.addEventListener('mouseleave',hideTip);
@@ -880,19 +1001,28 @@
       const W=560,H=280,P={t:20,r:18,b:40,l:44};
       const iw=W-P.l-P.r, ih=H-P.t-P.b;
       const max=Math.max(...data.map(d=>d.value))*1.15;
-      const bw=Math.min(62, iw/data.length-22), gap=(iw-bw*data.length)/(data.length+1);
+      const bw=Math.min(62, iw/data.length-22);
+      const gap=(iw-bw*data.length)/(data.length+1);
+
       let html='';
       for(let i=0;i<5;i++){
         const gy=P.t+(ih/4)*i;
-        html += `<line x1="${P.l}" y1="${gy}" x2="${W-P.r}" y2="${gy}" stroke="${css('--line')}" stroke-width="1"/>`;
+        html+=`<line x1="${P.l}" y1="${gy}" x2="${W-P.r}" y2="${gy}" stroke="${css('--line')}" stroke-width="1"/>`;
       }
+
       data.forEach((d,i)=>{
         const x=P.l+gap+i*(bw+gap);
-        const h=(d.value/max)*ih, y=P.t+ih-h;
-        html += `<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="10" fill="${css('--cyan')}" opacity=".78"></rect>`;
-        html += `<text x="${x+bw/2}" y="${H-14}" text-anchor="middle" fill="${css('--text-dim')}" font-size="10" font-family="IBM Plex Mono">${d.label}</text>`;
+        const h=(d.value/max)*ih;
+        const y=P.t+ih-h;
+        html+=`
+          <rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="10"
+            fill="${css('--cyan')}" opacity=".78"></rect>
+          <text x="${x+bw/2}" y="${H-14}" text-anchor="middle"
+            fill="${css('--text-dim')}" font-size="10" font-family="IBM Plex Mono">${d.label}</text>
+        `;
       });
-      svg.innerHTML=html;
+
+      svg.innerHTML = html;
       [...svg.querySelectorAll('rect')].forEach((bar,i)=>{
         bar.style.cursor='pointer';
         bar.addEventListener('mousemove',(e)=>showTip(e,`<strong>${data[i].label}</strong><br>$${data[i].value}T volume`));
@@ -900,231 +1030,17 @@
       });
     }
 
-    // NEW: live compare chart
-    const compareData = {
-      dev: {label:'Developer Friendliness', stripe:92, paypal:78, adyen:74},
-      enterprise: {label:'Enterprise Penetration', stripe:84, paypal:86, adyen:81},
-      global: {label:'Global Coverage', stripe:88, paypal:91, adyen:83},
-      stack: {label:'Platform Breadth', stripe:90, paypal:79, adyen:76}
-    };
-    let currentMetric = 'dev';
-
-    function drawCompareChart(metric){
-      const svg = $('#compareChart');
-      const d = compareData[metric];
-      const W=760,H=300,P={t:30,r:24,b:44,l:120};
-      const iw=W-P.l-P.r, ih=H-P.t-P.b;
-      const rows = [
-        {name:'Stripe', val:d.stripe, color:css('--stripe')},
-        {name:'PayPal', val:d.paypal, color:css('--paypal')},
-        {name:'Adyen', val:d.adyen, color:css('--adyen')}
-      ];
-
-      let html = '';
-      html += `<text x="${P.l}" y="18" fill="${css('--text-dim')}" font-size="11" font-family="IBM Plex Mono">${d.label} (score /100)</text>`;
-
-      for(let i=0;i<=5;i++){
-        const x=P.l+(iw/5)*i;
-        html += `<line x1="${x}" y1="${P.t}" x2="${x}" y2="${H-P.b}" stroke="${css('--line')}" stroke-width="1"/>`;
-        html += `<text x="${x}" y="${H-18}" text-anchor="middle" fill="${css('--text-dim')}" font-size="10" font-family="IBM Plex Mono">${i*20}</text>`;
-      }
-
-      rows.forEach((r,i)=>{
-        const y = P.t + i*(ih/3) + 18;
-        const barW = (r.val/100) * iw;
-        html += `<text x="${P.l-12}" y="${y+8}" text-anchor="end" fill="${css('--text')}" font-size="13" font-family="Inter" font-weight="600">${r.name}</text>`;
-        html += `<rect x="${P.l}" y="${y-8}" width="${barW}" height="24" rx="10" fill="${r.color}" opacity=".9"></rect>`;
-        html += `<text x="${P.l + barW + 8}" y="${y+8}" fill="${css('--white')}" font-size="12" font-family="IBM Plex Mono">${r.val}</text>`;
-      });
-
-      svg.innerHTML = html;
-
-      // hover tooltips over bars
-      [...svg.querySelectorAll('rect')].forEach((bar,i)=>{
-        const r = rows[i];
-        bar.style.cursor='pointer';
-        bar.addEventListener('mousemove',(e)=>showTip(e,`<strong>${r.name}</strong><br>${d.label}: ${r.val}/100`));
-        bar.addEventListener('mouseleave',hideTip);
-      });
-    }
-
-    function setMetric(metric){
-      currentMetric = metric;
-      $$('.compare-btn').forEach(btn=>btn.classList.toggle('active', btn.dataset.metric===metric));
-      drawCompareChart(metric);
-    }
-
-    $('#compareControls').addEventListener('click', (e)=>{
-      const btn = e.target.closest('.compare-btn');
-      if(!btn) return;
-      setMetric(btn.dataset.metric);
-    });
-
-    // NEW: Auto slider
-    const slidesEl = $('#slides');
-    const dotsEl = $('#dots');
-    const slideCount = $$('.slide', slidesEl).length;
-    let currentSlide = 0;
-    let playing = true;
-    let sliderTimer;
-
-    function renderDots(){
-      dotsEl.innerHTML = '';
-      for(let i=0;i<slideCount;i++){
-        const b = document.createElement('button');
-        b.className = `dot ${i===currentSlide ? 'active' : ''}`;
-        b.setAttribute('aria-label', `Go to slide ${i+1}`);
-        b.addEventListener('click', ()=>goSlide(i, true));
-        dotsEl.appendChild(b);
-      }
-    }
-    function goSlide(index, userAction=false){
-      currentSlide = (index + slideCount) % slideCount;
-      slidesEl.style.transform = `translateX(-${currentSlide*100}%)`;
-      renderDots();
-      if(userAction) restartAuto();
-    }
-    function nextSlide(userAction=false){ goSlide(currentSlide+1, userAction); }
-    function prevSlide(userAction=false){ goSlide(currentSlide-1, userAction); }
-
-    function startAuto(){
-      sliderTimer = setInterval(()=>{ if(playing) nextSlide(); }, 3500);
-    }
-    function restartAuto(){
-      clearInterval(sliderTimer);
-      startAuto();
-    }
-
-    $('#nextSlide').addEventListener('click', ()=>nextSlide(true));
-    $('#prevSlide').addEventListener('click', ()=>prevSlide(true));
-    $('#pauseSlide').addEventListener('click', (e)=>{
-      playing = !playing;
-      e.target.textContent = playing ? 'Pause' : 'Play';
-    });
-
-    renderDots();
-    startAuto();
-
-    // Charts draw all
     function drawAllCharts(){
       drawLineChart($('#valuationChart'), valuationData);
       drawBarChart($('#volumeChart'), volumeData);
-      drawCompareChart(currentMetric);
     }
     drawAllCharts();
 
     let raf;
     addEventListener('resize', ()=>{
       cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(()=>{
-        drawAllCharts();
-        initParticles(true);
-      });
+      raf = requestAnimationFrame(drawAllCharts);
     });
-
-    // NEW: Particle background system
-    const canvas = $('#particleCanvas');
-    const ctx = canvas.getContext('2d', {alpha:true});
-    let particles = [];
-    let particleRAF;
-    let mouse = {x: null, y: null, active:false};
-
-    function hexToRgb(hex){
-      const h = hex.replace('#','').trim();
-      const bigint = parseInt(h.length===3 ? h.split('').map(c=>c+c).join('') : h, 16);
-      return { r:(bigint>>16)&255, g:(bigint>>8)&255, b:bigint&255 };
-    }
-
-    function resizeCanvas(){
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.floor(window.innerWidth * dpr);
-      canvas.height = Math.floor(window.innerHeight * dpr);
-      canvas.style.width = window.innerWidth + 'px';
-      canvas.style.height = window.innerHeight + 'px';
-      ctx.setTransform(dpr,0,0,dpr,0,0);
-    }
-
-    function initParticles(reset=false){
-      if(reset) particles = [];
-      resizeCanvas();
-      const count = Math.min(140, Math.floor(window.innerWidth / 10));
-      const c1 = hexToRgb(getComputedStyle(document.documentElement).getPropertyValue('--violet').trim());
-      const c2 = hexToRgb(getComputedStyle(document.documentElement).getPropertyValue('--cyan').trim());
-
-      particles = Array.from({length:count}, (_,i)=>({
-        x: Math.random()*window.innerWidth,
-        y: Math.random()*window.innerHeight,
-        vx: (Math.random()-.5)*0.45,
-        vy: (Math.random()-.5)*0.45,
-        r: Math.random()*1.9 + 0.5,
-        color: i%2===0 ? c1 : c2
-      }));
-    }
-
-    function drawParticles(){
-      ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
-
-      // Draw links
-      for(let i=0;i<particles.length;i++){
-        const p = particles[i];
-        for(let j=i+1;j<particles.length;j++){
-          const q = particles[j];
-          const dx = p.x-q.x, dy = p.y-q.y;
-          const dist = Math.sqrt(dx*dx + dy*dy);
-          if(dist < 110){
-            const a = (1 - dist/110) * 0.18;
-            ctx.strokeStyle = `rgba(${p.color.r},${p.color.g},${p.color.b},${a})`;
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(p.x,p.y);
-            ctx.lineTo(q.x,q.y);
-            ctx.stroke();
-          }
-        }
-      }
-
-      particles.forEach(p=>{
-        if(mouse.active && mouse.x!=null){
-          const dx = mouse.x - p.x;
-          const dy = mouse.y - p.y;
-          const dist = Math.sqrt(dx*dx + dy*dy);
-          if(dist < 120){
-            p.vx -= dx * 0.00003;
-            p.vy -= dy * 0.00003;
-          }
-        }
-
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if(p.x<0 || p.x>window.innerWidth) p.vx *= -1;
-        if(p.y<0 || p.y>window.innerHeight) p.vy *= -1;
-
-        p.vx *= 0.995;
-        p.vy *= 0.995;
-        p.vx += (Math.random()-0.5)*0.002;
-        p.vy += (Math.random()-0.5)*0.002;
-
-        ctx.fillStyle = `rgba(${p.color.r},${p.color.g},${p.color.b},0.75)`;
-        ctx.beginPath();
-        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-        ctx.fill();
-      });
-
-      particleRAF = requestAnimationFrame(drawParticles);
-    }
-
-    window.addEventListener('mousemove', (e)=>{
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-      mouse.active = true;
-    }, {passive:true});
-    window.addEventListener('mouseleave', ()=>{
-      mouse.active = false;
-    });
-
-    initParticles();
-    drawParticles();
   </script>
 </body>
 </html>
