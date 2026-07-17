@@ -18,20 +18,20 @@
       --panel:#ffffffcc;
       --panel-solid:#ffffff;
       --panel-hi:#f4f7ff;
-      --line:#dce3f8;
-      --text:#1d2742;
-      --text-dim:#5f6e94;
-      --white:#0f1730;
-      --violet:#6b5cff;
-      --violet-bright:#5746ff;
+      --line:#d7e3fb;
+      --text:#1a2740;
+      --text-dim:#5b6b90;
+      --white:#0b1730;
+      --violet:#2f6fed;
+      --violet-bright:#1454e0;
       --amber:#e6951f;
       --green:#07b06e;
-      --pink:#ff4fa3;
-      --cyan:#1ea7ff;
-      --shadow:0 10px 30px rgba(57,74,130,.12);
-      --hero-glow: radial-gradient(circle at 20% 10%, rgba(107,92,255,.24), transparent 45%),
-                   radial-gradient(circle at 80% 30%, rgba(30,167,255,.20), transparent 40%),
-                   radial-gradient(circle at 55% 85%, rgba(255,79,163,.14), transparent 40%);
+      --pink:#0ea5e9;
+      --cyan:#38bdf8;
+      --shadow:0 10px 30px rgba(31,71,153,.12);
+      --hero-glow: radial-gradient(circle at 20% 10%, rgba(47,111,237,.22), transparent 45%),
+                   radial-gradient(circle at 80% 30%, rgba(56,189,248,.20), transparent 40%),
+                   radial-gradient(circle at 55% 85%, rgba(14,165,233,.14), transparent 40%);
     }
 
     html[data-theme="dark"]{
@@ -40,20 +40,20 @@
       --panel:#141b2ed9;
       --panel-solid:#141b2e;
       --panel-hi:#182036;
-      --line:#242e47;
-      --text:#c3cbe0;
-      --text-dim:#7c88a8;
-      --white:#eef1fa;
-      --violet:#8f7bff;
-      --violet-bright:#a996ff;
+      --line:#22314f;
+      --text:#c2cee6;
+      --text-dim:#7c8bac;
+      --white:#eef3fb;
+      --violet:#4f8bff;
+      --violet-bright:#7aaeff;
       --amber:#ffb454;
       --green:#5fe8a0;
-      --pink:#ff7ac6;
+      --pink:#3bc2ff;
       --cyan:#49c7ff;
       --shadow:0 12px 32px rgba(0,0,0,.36);
-      --hero-glow: radial-gradient(circle at 20% 10%, rgba(143,123,255,.20), transparent 45%),
-                   radial-gradient(circle at 80% 30%, rgba(73,199,255,.16), transparent 40%),
-                   radial-gradient(circle at 55% 85%, rgba(255,122,198,.12), transparent 40%);
+      --hero-glow: radial-gradient(circle at 20% 10%, rgba(79,139,255,.22), transparent 45%),
+                   radial-gradient(circle at 80% 30%, rgba(73,199,255,.18), transparent 40%),
+                   radial-gradient(circle at 55% 85%, rgba(59,194,255,.13), transparent 40%);
     }
 
     *{box-sizing:border-box; margin:0; padding:0}
@@ -102,7 +102,22 @@
     }
     .brand{
       font-family:var(--mono); font-size:13px; font-weight:700; color:var(--white);
+      display:flex; align-items:center; gap:10px;
+    }
+    .brand-logo{
       display:flex; align-items:center; gap:8px;
+      font-family:var(--sans); font-weight:800; font-size:17px;
+      letter-spacing:-.02em; color:var(--violet-bright);
+    }
+    .brand-logo .mark{
+      width:24px; height:24px; border-radius:7px;
+      background:linear-gradient(135deg,var(--violet),var(--cyan));
+      display:flex; align-items:center; justify-content:center;
+      color:#fff; font-family:var(--sans); font-weight:800; font-size:13px;
+      box-shadow:0 4px 12px rgba(20,84,224,.35);
+    }
+    .brand-sep{
+      width:1px; height:16px; background:var(--line);
     }
     .brand-dot{
       width:8px; height:8px; border-radius:50%;
@@ -196,10 +211,16 @@
       margin-bottom:14px;
     }
     .gradient-text{
-      background:linear-gradient(90deg,var(--violet-bright),var(--pink),var(--cyan));
+      background:linear-gradient(90deg,var(--violet-bright),var(--cyan),var(--pink),var(--violet-bright));
+      background-size:300% 100%;
       -webkit-background-clip:text;
       background-clip:text;
       color:transparent;
+      animation:gradientShift 6s ease-in-out infinite;
+    }
+    @keyframes gradientShift{
+      0%,100%{background-position:0% 50%}
+      50%{background-position:100% 50%}
     }
     .lead{
       font-size:18px;
@@ -312,9 +333,62 @@
       border:1px solid var(--line);
       border-radius:12px;
       background:var(--panel-solid);
+      transition:.3s cubic-bezier(.2,.7,.3,1);
     }
+    .card:hover{transform:translateY(-4px); box-shadow:var(--shadow); border-color:color-mix(in srgb, var(--violet) 40%, var(--line));}
     .card h3{font-size:16px; color:var(--white); margin-bottom:8px;}
     .card p{font-size:14px; margin:0; color:var(--text);}
+
+    .icon-row{
+      display:grid; grid-template-columns:repeat(3,1fr); gap:12px;
+      margin-top:20px;
+    }
+    .icon-card{
+      padding:18px 16px;
+      transition:.3s cubic-bezier(.2,.7,.3,1);
+    }
+    .icon-card:hover{
+      transform:translateY(-4px);
+      border-color:color-mix(in srgb, var(--violet) 45%, var(--line));
+    }
+    .icon-badge{
+      display:flex; align-items:center; justify-content:center;
+      width:38px; height:38px; border-radius:10px;
+      background:linear-gradient(135deg, color-mix(in srgb,var(--violet) 18%, transparent), color-mix(in srgb,var(--cyan) 18%, transparent));
+      color:var(--violet-bright);
+      margin-bottom:12px;
+    }
+    .icon-badge svg{width:19px; height:19px;}
+    .icon-card h3{font-size:15px; color:var(--white); margin-bottom:6px;}
+    .icon-card p{font-size:13.5px; color:var(--text); margin:0;}
+    @media (max-width:920px){ .icon-row{grid-template-columns:1fr} }
+
+    .flow-row{
+      display:flex; align-items:center; gap:14px;
+      margin-top:22px; padding:18px;
+      border:1px solid var(--line); border-radius:14px;
+      background:var(--panel); box-shadow:var(--shadow);
+      flex-wrap:wrap;
+    }
+    .flow-step{
+      flex:1; min-width:120px; text-align:center;
+      display:flex; flex-direction:column; align-items:center; gap:4px;
+    }
+    .flow-step .icon-badge{margin-bottom:4px;}
+    .flow-step .lbl{font-weight:700; color:var(--white); font-size:14.5px;}
+    .flow-step .sub{font-size:12px; color:var(--text-dim);}
+    .flow-arrow{
+      font-size:20px; color:var(--violet-bright); font-weight:700;
+      animation:flowPulse 1.8s ease-in-out infinite;
+    }
+    @keyframes flowPulse{
+      0%,100%{transform:translateX(0); opacity:.55}
+      50%{transform:translateX(4px); opacity:1}
+    }
+    @media (max-width:640px){
+      .flow-row{flex-direction:column}
+      .flow-arrow{transform:rotate(90deg)}
+    }
 
     .term-list{margin-top:10px}
     .term{
@@ -352,6 +426,10 @@
       border-radius:14px;
       border:1px solid var(--line);
       background:#dde4f8;
+      transition:.3s;
+    }
+    .founder:hover img{
+      box-shadow:0 0 0 3px color-mix(in srgb, var(--violet) 30%, transparent);
     }
     .founder h3{font-size:19px; color:var(--white); margin-bottom:2px}
     .meta{
@@ -536,19 +614,18 @@
 
   <nav class="topbar">
     <div class="topbar-inner">
-      <div class="brand"><span class="brand-dot"></span> stripe.entry / v6 extended</div>
+      <div class="brand">
+        <span class="brand-logo"><span class="mark">S</span>stripe</span>
+        <span class="brand-sep"></span>
+        <span class="brand-dot"></span> encyclopedia entry / v6</div>
       <div class="toolbar">
         <button class="theme-btn" id="themeBtn">🌙 Dark</button>
         <div class="toc" id="toc">
           <a href="#friction" data-target="friction">01 Friction</a>
           <a href="#founders" data-target="founders">02 Founders</a>
           <a href="#model" data-target="model">03 Model</a>
-          <a href="#products" data-target="products">04 Products</a>
-          <a href="#economics" data-target="economics">05 Economics</a>
-          <a href="#scale" data-target="scale">06 Scale</a>
-          <a href="#charts" data-target="charts">07 Charts</a>
-          <a href="#status" data-target="status">08 Status</a>
-          <a href="#faq" data-target="faq">09 FAQ</a>
+          <a href="#scale" data-target="scale">04 Scale</a>
+          <a href="#status" data-target="status">05 Status</a>
         </div>
       </div>
     </div>
@@ -579,16 +656,38 @@
       <div class="section-num reveal">Section 01</div>
       <h2 class="reveal">The Original Problem: “Getting Paid” Was Harder Than Building</h2>
       <p class="reveal">
-        In the late 2000s and early 2010s, online payments were fragmented across banks, card networks, gateways, and compliance requirements. A startup could build a functional web product quickly, but monetization often required contracts, underwriting, and legacy tooling.
+        In the late 2000s, online payments were fragmented across banks, card networks, and compliance requirements. A startup could build a product in a weekend but monetization needed contracts, underwriting, and legacy tooling.
       </p>
       <p class="reveal">
-        Stripe’s early breakthrough wasn’t inventing digital payments — it was reducing integration friction. The company offered clear APIs, better documentation, clean developer ergonomics, and an onboarding flow designed around software teams rather than bank ops teams.
+        Stripe’s breakthrough wasn’t inventing digital payments — it was removing integration friction, with clear APIs and an onboarding flow built for software teams instead of bank ops teams.
       </p>
-      <p class="reveal">
-        That seemingly simple shift changed startup velocity: teams could test pricing, run checkout experiments, and launch subscription products faster because payment infrastructure stopped being the blocking dependency.
-      </p>
+
+      <div class="icon-row">
+        <div class="icon-card glass reveal">
+          <span class="icon-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 3.2"/></svg>
+          </span>
+          <h3>Weeks, not minutes</h3>
+          <p>Getting a merchant account and gateway approved took weeks of paperwork.</p>
+        </div>
+        <div class="icon-card glass reveal">
+          <span class="icon-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M3 11h18M7 15h3"/></svg>
+          </span>
+          <h3>Who felt it</h3>
+          <p>Independent developers and startups could ship a product but not get paid for it.</p>
+        </div>
+        <div class="icon-card glass reveal">
+          <span class="icon-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 12h8M8 8h8M8 16h5"/><rect x="4" y="4" width="16" height="16" rx="3"/></svg>
+          </span>
+          <h3>What was missing</h3>
+          <p>Banks already had the rails — small businesses just couldn’t reach them easily.</p>
+        </div>
+      </div>
+
       <div class="callout glass reveal">
-        <strong>Why this mattered:</strong> Stripe captured value by compressing “time to first transaction.” For many startups, that was the difference between idea and revenue.
+        <strong>Why this mattered:</strong> Stripe captured value by compressing “time to first transaction” — for many startups, the difference between idea and revenue.
       </div>
     </section>
 
@@ -596,12 +695,12 @@
       <div class="section-num reveal">Section 02</div>
       <h2 class="reveal">Founders, Background, and Early DNA</h2>
       <p class="reveal">
-        Patrick and John Collison grew up in Ireland, both deeply technical from a young age. Before Stripe, they built and sold Auctomatic, then continued building software projects where the same payment bottleneck kept appearing.
+        Patrick and John Collison grew up in Ireland. Before Stripe, they built and sold Auctomatic, then kept running into the same payment bottleneck across other software projects.
       </p>
 
       <div class="founder-grid">
         <article class="founder glass reveal">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Patrick_Collison_2019.jpg/440px-Patrick_Collison_2019.jpg" alt="Patrick Collison">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Patrick_Collison_(cropped).jpg?width=440" alt="Patrick Collison" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2214%22 fill=%22%232f6fed%22/%3E%3Ctext x=%2250%22 y=%2261%22 font-family=%22Arial,sans-serif%22 font-size=%2236%22 font-weight=%22700%22 fill=%22%23fff%22 text-anchor=%22middle%22%3EPC%3C/text%3E%3C/svg%3E'">
           <div>
             <h3>Patrick Collison</h3>
             <div class="meta">Co-founder · Chief Executive Officer</div>
@@ -610,7 +709,7 @@
         </article>
 
         <article class="founder glass reveal">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/John_Collison_%282019%29.jpg/440px-John_Collison_%282019%29.jpg" alt="John Collison">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Sportsfile_(Web_Summit)_(15088695584).jpg?width=440" alt="John Collison" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2214%22 fill=%22%231454e0%22/%3E%3Ctext x=%2250%22 y=%2261%22 font-family=%22Arial,sans-serif%22 font-size=%2236%22 font-weight=%22700%22 fill=%22%23fff%22 text-anchor=%22middle%22%3EJC%3C/text%3E%3C/svg%3E'">
           <div>
             <h3>John Collison</h3>
             <div class="meta">Co-founder · President</div>
@@ -639,8 +738,29 @@
       <div class="section-num reveal">Section 03</div>
       <h2 class="reveal">Business Model: A Toll on Digital Commerce Flow</h2>
       <p class="reveal">
-        Stripe’s core revenue engine is transaction-linked: when customers process payments, Stripe earns a portion of payment fees while passing through network and issuing-bank costs. This means Stripe’s top-line momentum naturally tracks merchant volume growth.
+        Stripe’s core revenue engine is transaction-linked: when customers process payments, Stripe earns a portion of payment fees while passing through network and issuing-bank costs — so top-line growth tracks merchant volume.
       </p>
+
+      <div class="flow-row reveal">
+        <div class="flow-step">
+          <span class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1.2-3.6 4-5.4 7-5.4s5.8 1.8 7 5.4"/></svg></span>
+          <div class="lbl">Customer</div>
+          <div class="sub">Pays online</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <span class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg></span>
+          <div class="lbl">Stripe</div>
+          <div class="sub">Processes payment</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <span class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10.5 12 4l9 6.5"/><path d="M5 10v9h14v-9"/></svg></span>
+          <div class="lbl">Business</div>
+          <div class="sub">Receives money</div>
+        </div>
+      </div>
+      <p class="reveal" style="font-size:14px; color:var(--text-dim); margin-top:10px;">Stripe fee: <strong style="color:var(--violet-bright)">~2.9% + 30¢</strong> per successful transaction.</p>
 
       <div class="grid-2">
         <div class="card reveal">
@@ -666,79 +786,8 @@
       </div>
     </section>
 
-    <section class="section" id="products">
-      <div class="section-num reveal">Section 04</div>
-      <h2 class="reveal">Product Ecosystem: Beyond Payment Acceptance</h2>
-      <p class="reveal">
-        Stripe’s expansion strategy has been systematic: begin with payment APIs, then layer adjacent products that solve next-order merchant problems (fraud, subscriptions, global tax, payout orchestration, and embedded finance).
-      </p>
-
-      <div class="grid-3">
-        <div class="card reveal"><h3>Payments</h3><p>Global payment method acceptance, card tokenization, retries, and checkout conversion tooling.</p></div>
-        <div class="card reveal"><h3>Checkout</h3><p>Prebuilt conversion-optimized checkout surfaces that reduce implementation time and improve payment success rates.</p></div>
-        <div class="card reveal"><h3>Elements</h3><p>Composable UI primitives for custom payment UX with strong compliance and wallet support.</p></div>
-        <div class="card reveal"><h3>Radar</h3><p>Machine-learning fraud scoring and custom rules for chargeback and abuse risk management.</p></div>
-        <div class="card reveal"><h3>Billing</h3><p>Subscriptions, usage metering, proration, revenue-cycle operations, and recurring billing automation.</p></div>
-        <div class="card reveal"><h3>Invoicing</h3><p>Invoice workflows for B2B and hybrid monetization models with hosted payment collection.</p></div>
-        <div class="card reveal"><h3>Connect</h3><p>Marketplace and platform payouts, onboarding, KYC/KYB controls, and multi-party money movement.</p></div>
-        <div class="card reveal"><h3>Tax</h3><p>Automated sales tax / VAT calculations and compliance-aware checkout experiences.</p></div>
-        <div class="card reveal"><h3>Atlas</h3><p>Startup formation and setup product that captures founders at company inception.</p></div>
-      </div>
-    </section>
-
-    <section class="section" id="economics">
-      <div class="section-num reveal">Section 05</div>
-      <h2 class="reveal">Economics & Competitive Positioning</h2>
-      <p class="reveal">
-        Stripe operates in a highly competitive landscape with legacy processors, acquirers, and newer fintech platforms. Its edge has historically come from developer velocity, high-quality docs, clean APIs, and rapid shipping cadence.
-      </p>
-
-      <div class="table-wrap reveal">
-        <table>
-          <thead>
-            <tr>
-              <th>Dimension</th>
-              <th>Stripe Position</th>
-              <th>Strategic Implication</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Integration speed</td>
-              <td>High</td>
-              <td>Faster time-to-revenue for startups and product teams</td>
-            </tr>
-            <tr>
-              <td>Global method depth</td>
-              <td>Strong</td>
-              <td>Supports localization and international expansion</td>
-            </tr>
-            <tr>
-              <td>Platform ecosystem</td>
-              <td>Broad</td>
-              <td>Higher product stickiness across workflows</td>
-            </tr>
-            <tr>
-              <td>Pricing pressure risk</td>
-              <td>Moderate</td>
-              <td>Requires constant differentiation via software value-add</td>
-            </tr>
-            <tr>
-              <td>Private-market flexibility</td>
-              <td>High</td>
-              <td>Allows long-horizon product bets without quarterly market pressure</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="callout glass reveal">
-        <strong>Competitive lens:</strong> Stripe is strongest where payment processing is tightly bundled with developer tooling and monetization logic, not just raw transaction routing.
-      </div>
-    </section>
-
     <section class="section" id="scale">
-      <div class="section-num reveal">Section 06</div>
+      <div class="section-num reveal">Section 04</div>
       <h2 class="reveal">Scale, Reach, and Milestone Timeline</h2>
       <p class="reveal">
         Stripe’s trajectory reflects a classic infrastructure pattern: early adoption among startups, then expansion into enterprise and platform use-cases, and finally deeper financial product layering.
@@ -755,72 +804,21 @@
       </div>
     </section>
 
-    <section class="section" id="charts">
-      <div class="section-num reveal">Section 07</div>
-      <h2 class="reveal">Interactive Data Visualizations</h2>
-      <p class="reveal">
-        Hover over data points and bars for exact values. Charts are rendered in pure SVG for responsiveness and speed.
-      </p>
-
-      <div class="chart-wrap">
-        <div class="chart-card glass reveal">
-          <div class="chart-title">Valuation Path (USD Billions)</div>
-          <svg id="valuationChart" viewBox="0 0 560 280" width="100%" role="img" aria-label="Valuation line chart"></svg>
-          <div class="chart-legend">
-            <span><span class="legend-dot" style="background:var(--violet)"></span> Valuation</span>
-          </div>
-        </div>
-
-        <div class="chart-card glass reveal">
-          <div class="chart-title">Payment Volume (USD Trillions)</div>
-          <svg id="volumeChart" viewBox="0 0 560 280" width="100%" role="img" aria-label="Volume bar chart"></svg>
-          <div class="chart-legend">
-            <span><span class="legend-dot" style="background:var(--cyan)"></span> Annual Volume</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section class="section" id="status">
-      <div class="section-num reveal">Section 08</div>
+      <div class="section-num reveal">Section 05</div>
       <h2 class="reveal">Status in 2026: Private, Profitable Orientation, Expanding Surface Area</h2>
       <div class="status-badge reveal">● Independent & Operating</div>
       <p class="reveal">
-        Stripe remains privately held and appears to prioritize controlled compounding over short-term signaling. Rather than narrowing scope, the company has continued building additional rails and software layers around money movement.
+        Stripe remains privately held, prioritizing controlled compounding over short-term signaling — continuing to build additional rails and software layers around money movement rather than narrowing scope.
       </p>
       <p class="reveal">
-        Strategic themes include: enterprise-grade reliability, broader global reach, deeper financial primitives, and new commerce interfaces shaped by automation/AI-driven purchasing flows.
-      </p>
-      <p class="reveal">
-        For founders and operators, Stripe’s current posture suggests it wants to be the default orchestration substrate for internet revenue — not only a checkout button.
+        Strategic themes include enterprise-grade reliability, broader global reach, deeper financial primitives, and new commerce interfaces shaped by AI-driven purchasing flows.
       </p>
       <div class="callout glass reveal">
         <strong>Bottom line:</strong> Stripe’s moat is not one fee line item; it is the integrated stack that sits between product code, global regulations, payment rails, and revenue operations.
       </div>
     </section>
 
-    <section class="section" id="faq">
-      <div class="section-num reveal">Section 09</div>
-      <h2 class="reveal">Quick FAQ</h2>
-      <div class="faq">
-        <details class="reveal">
-          <summary>Is Stripe a bank?</summary>
-          <p>No. Stripe is primarily a financial infrastructure and software platform that partners with regulated banking and payment entities where required.</p>
-        </details>
-        <details class="reveal">
-          <summary>Why do developers prefer Stripe?</summary>
-          <p>Historically: strong documentation, clean APIs, fast sandbox-to-production path, and broad tooling around payments lifecycle operations.</p>
-        </details>
-        <details class="reveal">
-          <summary>Does Stripe only serve startups?</summary>
-          <p>No. It serves both early-stage companies and large enterprises/platforms, often with different integration depth and product mix.</p>
-        </details>
-        <details class="reveal">
-          <summary>Why hasn’t Stripe gone public yet?</summary>
-          <p>As a private company, it can pursue longer-term product decisions and use tender offers for liquidity without full public listing requirements.</p>
-        </details>
-      </div>
-    </section>
   </main>
 
   <footer>
@@ -832,6 +830,9 @@
       <div class="footer-meta">
         <span>Founded 2010 · Patrick & John Collison · Palo Alto</span>
         <span>Updated for class use · 2026</span>
+      </div>
+      <div class="disclaimer" style="margin-top:18px; margin-bottom:0;">
+        <strong>Disclaimer:</strong> This website is a student project created for the PGDM Fintech coursework as part of an academic assignment. It is not affiliated with, endorsed by, or connected to Stripe, Inc. in any way. All company names, logos, and trademarks belong to their respective owners and are used solely for educational purposes. Content has been compiled from publicly available sources and is believed to be accurate as of the date of publication; founder photographs are credited to their respective sources (Wikimedia Commons).
       </div>
     </div>
   </footer>
@@ -863,7 +864,6 @@
       root.setAttribute('data-theme', next);
       localStorage.setItem('stripe-theme', next);
       themeBtn.textContent = next === 'dark' ? '☀️ Light' : '🌙 Dark';
-      drawAllCharts();
     });
 
     // Reveal
@@ -919,128 +919,6 @@
     }, {threshold:.5});
     $$('.kpi .num[data-count]').forEach(c=>counterObs.observe(c));
 
-    // Charts
-    const tooltip = $('#tooltip');
-    const valuationData = [
-      {label:'2021', value:95},
-      {label:'2023', value:50},
-      {label:'Feb 2025', value:91.5},
-      {label:'Sep 2025', value:106.7},
-      {label:'Feb 2026', value:159}
-    ];
-    const volumeData = [
-      {label:'2021', value:0.64},
-      {label:'2022', value:0.82},
-      {label:'2023', value:1.00},
-      {label:'2024', value:1.42},
-      {label:'2025', value:1.90}
-    ];
-    const css = (v)=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
-
-    function showTip(e, html){
-      tooltip.innerHTML = html;
-      tooltip.classList.add('show');
-      tooltip.style.left = `${e.clientX+12}px`;
-      tooltip.style.top = `${e.clientY+12}px`;
-    }
-    function hideTip(){ tooltip.classList.remove('show'); }
-
-    function drawLineChart(svg, data){
-      const W=560,H=280,P={t:20,r:18,b:40,l:44};
-      const iw=W-P.l-P.r, ih=H-P.t-P.b;
-      const max=Math.max(...data.map(d=>d.value))*1.1;
-      const xStep=iw/(data.length-1);
-      const x=i=>P.l+i*xStep;
-      const y=v=>P.t+ih-(v/max)*ih;
-
-      let html=`
-        <defs>
-          <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="${css('--violet')}"/>
-            <stop offset="60%" stop-color="${css('--pink')}"/>
-            <stop offset="100%" stop-color="${css('--cyan')}"/>
-          </linearGradient>
-          <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="${css('--violet')}" stop-opacity=".26"/>
-            <stop offset="100%" stop-color="${css('--violet')}" stop-opacity="0"/>
-          </linearGradient>
-        </defs>
-      `;
-      for(let i=0;i<5;i++){
-        const gy=P.t+(ih/4)*i;
-        html+=`<line x1="${P.l}" y1="${gy}" x2="${W-P.r}" y2="${gy}" stroke="${css('--line')}" stroke-width="1"/>`;
-      }
-
-      const path = data.map((d,i)=>`${i?'L':'M'} ${x(i)} ${y(d.value)}`).join(' ');
-      const area = `${path} L ${x(data.length-1)} ${H-P.b} L ${x(0)} ${H-P.b} Z`;
-      html += `<path d="${area}" fill="url(#areaGrad)"></path>`;
-      html += `<path d="${path}" fill="none" stroke="url(#lineGrad)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"></path>`;
-
-      data.forEach((d,i)=>{
-        html += `<text x="${x(i)}" y="${H-14}" text-anchor="middle" fill="${css('--text-dim')}" font-size="10" font-family="IBM Plex Mono">${d.label}</text>`;
-      });
-
-      svg.innerHTML=html;
-
-      data.forEach((d,i)=>{
-        const dot = document.createElementNS('http://www.w3.org/2000/svg','circle');
-        dot.setAttribute('cx',x(i));
-        dot.setAttribute('cy',y(d.value));
-        dot.setAttribute('r',5.4);
-        dot.setAttribute('fill',css('--panel-solid'));
-        dot.setAttribute('stroke',css('--violet'));
-        dot.setAttribute('stroke-width',2.4);
-        dot.style.cursor='pointer';
-        dot.addEventListener('mousemove',(e)=>showTip(e,`<strong>${d.label}</strong><br>$${d.value}B valuation`));
-        dot.addEventListener('mouseleave',hideTip);
-        svg.appendChild(dot);
-      });
-    }
-
-    function drawBarChart(svg, data){
-      const W=560,H=280,P={t:20,r:18,b:40,l:44};
-      const iw=W-P.l-P.r, ih=H-P.t-P.b;
-      const max=Math.max(...data.map(d=>d.value))*1.15;
-      const bw=Math.min(62, iw/data.length-22);
-      const gap=(iw-bw*data.length)/(data.length+1);
-
-      let html='';
-      for(let i=0;i<5;i++){
-        const gy=P.t+(ih/4)*i;
-        html+=`<line x1="${P.l}" y1="${gy}" x2="${W-P.r}" y2="${gy}" stroke="${css('--line')}" stroke-width="1"/>`;
-      }
-
-      data.forEach((d,i)=>{
-        const x=P.l+gap+i*(bw+gap);
-        const h=(d.value/max)*ih;
-        const y=P.t+ih-h;
-        html+=`
-          <rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="10"
-            fill="${css('--cyan')}" opacity=".78"></rect>
-          <text x="${x+bw/2}" y="${H-14}" text-anchor="middle"
-            fill="${css('--text-dim')}" font-size="10" font-family="IBM Plex Mono">${d.label}</text>
-        `;
-      });
-
-      svg.innerHTML = html;
-      [...svg.querySelectorAll('rect')].forEach((bar,i)=>{
-        bar.style.cursor='pointer';
-        bar.addEventListener('mousemove',(e)=>showTip(e,`<strong>${data[i].label}</strong><br>$${data[i].value}T volume`));
-        bar.addEventListener('mouseleave',hideTip);
-      });
-    }
-
-    function drawAllCharts(){
-      drawLineChart($('#valuationChart'), valuationData);
-      drawBarChart($('#volumeChart'), volumeData);
-    }
-    drawAllCharts();
-
-    let raf;
-    addEventListener('resize', ()=>{
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(drawAllCharts);
-    });
   </script>
 </body>
 </html>
