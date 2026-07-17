@@ -167,6 +167,9 @@
       border:1px solid transparent;
       border-radius:8px;
       transition:.2s;
+      cursor:pointer;
+      background:none;
+      font-weight:500;
     }
     .toc a.active{
       color:var(--violet-bright);
@@ -202,6 +205,16 @@
       margin-bottom:14px;
     }
     .hero-tag span{color:var(--violet-bright)}
+    .type-cursor{
+      display:inline-block;
+      color:var(--violet-bright);
+      animation:blinkCursor 1s step-end infinite;
+      margin-left:1px;
+    }
+    @keyframes blinkCursor{
+      0%,49%{opacity:1}
+      50%,100%{opacity:0}
+    }
     h1{
       font-size:clamp(40px,7vw,72px);
       line-height:1.03;
@@ -272,11 +285,66 @@
       text-transform:uppercase;
     }
 
+    /* --- NEW: explore hint button under hero --- */
+    .explore-hint{
+      margin-top:24px;
+      display:flex; align-items:center; gap:10px;
+      font-family:var(--mono); font-size:12px; color:var(--text-dim);
+    }
+    .explore-hint svg{ animation:bounceDown 1.6s ease-in-out infinite; }
+    @keyframes bounceDown{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(4px)}
+    }
+
+    .hero-actions{
+      display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+      margin-top:26px;
+    }
+    .explore-btn{
+      display:inline-flex; align-items:center; gap:8px;
+      background:linear-gradient(135deg, var(--violet), var(--violet-bright));
+      color:#fff;
+      font-family:var(--sans);
+      font-weight:700;
+      font-size:14.5px;
+      border:none;
+      border-radius:999px;
+      padding:13px 22px;
+      cursor:pointer;
+      text-decoration:none;
+      box-shadow:0 8px 22px rgba(20,84,224,.35);
+      transition:.24s cubic-bezier(.2,.7,.3,1);
+    }
+    .explore-btn:hover{
+      transform:translateY(-3px);
+      box-shadow:0 12px 28px rgba(20,84,224,.45);
+    }
+    .explore-btn svg{
+      width:15px; height:15px;
+      transition:.24s;
+    }
+    .explore-btn:hover svg{
+      transform:translate(2px,-2px);
+    }
+
     main{max-width:1180px; margin:0 auto; padding:0 20px}
+
+    /* --- TAB SYSTEM: sections hidden unless active --- */
     .section{
+      display:none;
       padding:56px 0;
       border-bottom:1px solid var(--line);
     }
+    .section.active-tab{
+      display:block;
+      animation:fadeInSection .4s ease;
+    }
+    @keyframes fadeInSection{
+      from{opacity:0; transform:translateY(10px)}
+      to{opacity:1; transform:translateY(0)}
+    }
+
     .section-num{
       font-family:var(--mono);
       font-size:12px;
@@ -304,7 +372,7 @@
     .reveal{
       opacity:0;
       transform:translateY(16px);
-      transition:.62s cubic-bezier(.2,.7,.3,1);
+      transition:.5s cubic-bezier(.2,.7,.3,1);
     }
     .reveal.in{
       opacity:1; transform:translateY(0);
@@ -390,6 +458,126 @@
       .flow-arrow{transform:rotate(90deg)}
     }
 
+    /* --- Fee calculator (interactive) --- */
+    .fee-calc{
+      margin-top:20px;
+      padding:20px 22px;
+    }
+    .fee-calc-head{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      margin-bottom:14px; flex-wrap:wrap;
+    }
+    .fee-calc-title{
+      font-family:var(--mono); font-size:12px; text-transform:uppercase;
+      letter-spacing:.05em; color:var(--text-dim);
+    }
+    .fee-calc-title strong{color:var(--violet-bright)}
+    #feeSlider{
+      width:100%;
+      -webkit-appearance:none; appearance:none;
+      height:6px; border-radius:999px;
+      background:linear-gradient(90deg, var(--violet), var(--cyan));
+      outline:none; cursor:pointer;
+      margin:10px 0 20px;
+    }
+    #feeSlider::-webkit-slider-thumb{
+      -webkit-appearance:none; appearance:none;
+      width:20px; height:20px; border-radius:50%;
+      background:#fff;
+      border:3px solid var(--violet-bright);
+      box-shadow:0 2px 8px rgba(20,84,224,.4);
+      cursor:pointer;
+    }
+    #feeSlider::-moz-range-thumb{
+      width:20px; height:20px; border-radius:50%;
+      background:#fff;
+      border:3px solid var(--violet-bright);
+      box-shadow:0 2px 8px rgba(20,84,224,.4);
+      cursor:pointer; border:3px solid var(--violet-bright);
+    }
+    .fee-calc-amounts{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+    }
+    .fee-calc-amounts > div{
+      display:flex; flex-direction:column; gap:4px;
+      padding:12px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:var(--panel-solid);
+    }
+    .fee-lbl{
+      font-family:var(--mono); font-size:10.5px; text-transform:uppercase;
+      letter-spacing:.04em; color:var(--text-dim);
+    }
+    .fee-val{
+      font-family:var(--mono); font-size:19px; font-weight:700; color:var(--white);
+    }
+    .fee-cut{color:var(--amber)}
+    .fee-net{color:var(--green)}
+    @media (max-width:640px){
+      .fee-calc-amounts{grid-template-columns:1fr}
+    }
+
+    /* --- Then vs Now toggle --- */
+    .tvn{ margin-top:20px; padding:20px 22px; }
+    .tvn-switch-row{
+      display:flex; align-items:center; justify-content:center; gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+    .tvn-label{
+      font-family:var(--mono); font-size:12.5px; font-weight:600;
+      color:var(--text-dim);
+      transition:.25s;
+    }
+    .tvn-label.active{ color:var(--white) }
+    .tvn-label-before.active{ color:#c0402c }
+    html[data-theme="dark"] .tvn-label-before.active{ color:#ff8a70 }
+    .tvn-label-after.active{ color:var(--violet-bright) }
+    .tvn-switch{
+      position:relative;
+      width:56px; height:30px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:linear-gradient(90deg,#e6764e,#e6764e);
+      cursor:pointer;
+      padding:0;
+      transition:.3s;
+      flex-shrink:0;
+    }
+    .tvn-switch[aria-checked="true"]{
+      background:linear-gradient(90deg,var(--violet),var(--cyan));
+    }
+    .tvn-knob{
+      position:absolute; top:3px; left:3px;
+      width:22px; height:22px; border-radius:50%;
+      background:#fff;
+      box-shadow:0 2px 6px rgba(0,0,0,.25);
+      transition:.3s cubic-bezier(.2,.7,.3,1);
+    }
+    .tvn-switch[aria-checked="true"] .tvn-knob{
+      transform:translateX(26px);
+    }
+    .tvn-panel{ position:relative; }
+    .tvn-list{
+      list-style:none;
+      display:none;
+      flex-direction:column;
+      gap:10px;
+    }
+    .tvn-list.active{ display:flex; animation:fadeInSection .35s ease; }
+    .tvn-list li{
+      font-size:14.5px;
+      padding:10px 14px;
+      border-radius:10px;
+      background:var(--panel-solid);
+      border:1px solid var(--line);
+    }
+    .tvn-before li{ border-left:3px solid #e6764e; }
+    .tvn-after li{ border-left:3px solid var(--violet-bright); }
+
     .term-list{margin-top:10px}
     .term{
       display:flex; gap:12px; align-items:flex-start;
@@ -441,6 +629,20 @@
       margin-bottom:8px;
     }
     .founder p{font-size:14px; margin:0; color:var(--text)}
+    .founder-more{
+      display:inline-flex; align-items:center; gap:5px;
+      margin-top:10px;
+      font-family:var(--mono); font-size:12px; font-weight:600;
+      color:var(--violet-bright);
+      text-decoration:none;
+      border-bottom:1px solid transparent;
+      transition:.2s;
+    }
+    .founder-more:hover{
+      border-bottom-color:var(--violet-bright);
+      gap:8px;
+    }
+    .founder-more svg{ width:12px; height:12px; }
 
     .timeline{display:grid; gap:10px; margin-top:16px}
     .tl{
@@ -488,47 +690,6 @@
       color:var(--text);
     }
     tr:last-child td{border-bottom:none}
-
-    .chart-wrap{
-      margin-top:20px;
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-    }
-    .chart-card{padding:14px}
-    .chart-title{
-      font-family:var(--mono);
-      font-size:11px;
-      letter-spacing:.04em;
-      text-transform:uppercase;
-      color:var(--text-dim);
-      margin-bottom:10px;
-    }
-    .chart-legend{
-      margin-top:8px;
-      display:flex; flex-wrap:wrap; gap:14px;
-      font-size:12px; color:var(--text-dim);
-    }
-    .legend-dot{
-      width:9px; height:9px; border-radius:50%;
-      display:inline-block; margin-right:6px;
-    }
-    .tooltip{
-      position:fixed;
-      z-index:200;
-      pointer-events:none;
-      opacity:0;
-      transform:translateY(6px);
-      transition:.14s;
-      background:var(--panel-solid);
-      border:1px solid var(--line);
-      border-radius:8px;
-      padding:6px 8px;
-      font-size:12px;
-      box-shadow:var(--shadow);
-      color:var(--text);
-    }
-    .tooltip.show{opacity:1; transform:translateY(0)}
 
     .status-badge{
       display:inline-flex; align-items:center; gap:8px;
@@ -588,16 +749,19 @@
       .hero-kpis{grid-template-columns:repeat(3,1fr)}
     }
     @media (max-width:920px){
-      .chart-wrap,.grid-2,.founder-grid{grid-template-columns:1fr}
+      .grid-2,.founder-grid{grid-template-columns:1fr}
       .grid-3{grid-template-columns:1fr}
       .hero-kpis{grid-template-columns:repeat(2,1fr)}
     }
     @media (max-width:740px){
-      .toc{display:none}
+      .toc{
+        display:flex; flex-wrap:wrap; max-width:100%;
+      }
       .founder{grid-template-columns:78px 1fr}
       .founder img{width:78px; height:78px}
       .tl{grid-template-columns:90px 1fr}
       .term .tag{min-width:100%}
+      .topbar-inner{flex-direction:column; align-items:flex-start; gap:10px;}
     }
 
     a:focus-visible, button:focus-visible, summary:focus-visible{
@@ -610,12 +774,11 @@
   <div class="ambient"></div>
   <div class="noise"></div>
   <div class="progress" id="progress"></div>
-  <div class="tooltip" id="tooltip"></div>
 
   <nav class="topbar">
     <div class="topbar-inner">
       <div class="brand">
-        <span class="brand-logo"><span class="mark">S</span>stripe</span>
+        <span class="brand-logo"><span class="mark">S</span>Stripe</span>
         <span class="brand-sep"></span>
         <span class="brand-dot"></span></div>
       <div class="toolbar">
@@ -632,7 +795,7 @@
   </nav>
 
   <header class="hero">
-    <div class="hero-tag"><span>//</span> dev/payments · founded 2010 · fintech encyclopedia entry</div>
+    <div class="hero-tag"><span>//</span> <span id="heroTypeTarget"></span><span class="type-cursor">|</span></div>
     <h1>Stripe — the <span class="gradient-text">commerce infrastructure layer</span> of the internet</h1>
     <p class="lead">
       Stripe turned online payments from a multi-week banking integration into a software workflow. What started as a developer-first API in 2010 has evolved into a broad financial operating system for internet businesses.
@@ -648,6 +811,17 @@
       <div class="kpi reveal"><div class="num" data-count="46" data-suffix="+">0+</div><div class="lbl">Countries with Direct Stripe</div></div>
       <div class="kpi reveal"><div class="num" data-count="195">0</div><div class="lbl">Countries Businesses Can Sell Into</div></div>
       <div class="kpi reveal"><div class="num" data-count="5" data-suffix="M+">0M+</div><div class="lbl">Businesses Served</div></div>
+    </div>
+
+    <div class="hero-actions">
+      <a class="explore-btn" href="https://stripe.com" target="_blank" rel="noopener noreferrer">
+        Explore Stripe.com
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg>
+      </a>
+      <div class="explore-hint">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        Or tap a section above (01–05) to explore this page
+      </div>
     </div>
   </header>
 
@@ -689,6 +863,30 @@
       <div class="callout glass reveal">
         <strong>Why this mattered:</strong> Stripe captured value by compressing “time to first transaction” — for many startups, the difference between idea and revenue.
       </div>
+
+      <div class="tvn glass reveal">
+        <div class="tvn-switch-row">
+          <span class="tvn-label tvn-label-before active" id="tvnLabelBefore">2009 — Before Stripe</span>
+          <button class="tvn-switch" id="tvnSwitch" role="switch" aria-checked="false" aria-label="Toggle between before and after Stripe">
+            <span class="tvn-knob"></span>
+          </button>
+          <span class="tvn-label tvn-label-after" id="tvnLabelAfter">2010 — After Stripe</span>
+        </div>
+        <div class="tvn-panel">
+          <ul class="tvn-list tvn-before active" id="tvnBefore">
+            <li>⏳ Merchant bank account approval: 2–3 weeks</li>
+            <li>🧾 Separate gateway and processor contracts to negotiate</li>
+            <li>🚫 High rejection rate for small, unproven businesses</li>
+            <li>🧩 Manual reconciliation across three different systems</li>
+          </ul>
+          <ul class="tvn-list tvn-after" id="tvnAfter">
+            <li>⚡ Integration time: a few minutes, not weeks</li>
+            <li>🔌 One unified API handles the entire payment flow</li>
+            <li>✅ Instant onboarding, even for a brand-new business</li>
+            <li>📊 Automatic reconciliation, reporting, and payouts</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
     <section class="section" id="founders">
@@ -705,6 +903,10 @@
             <h3>Patrick Collison</h3>
             <div class="meta">Co-founder · Chief Executive Officer</div>
             <p>Leads long-term company strategy, product architecture direction, and Stripe’s infrastructure-first expansion across global commerce rails.</p>
+            <a class="founder-more" href="https://en.wikipedia.org/wiki/Patrick_Collison" target="_blank" rel="noopener noreferrer">
+              Learn more about Patrick
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg>
+            </a>
           </div>
         </article>
 
@@ -714,6 +916,10 @@
             <h3>John Collison</h3>
             <div class="meta">Co-founder · President</div>
             <p>Drives operating execution, scale programs, and strategic product rollout across payments, billing, treasury-like, and platform tools.</p>
+            <a class="founder-more" href="https://en.wikipedia.org/wiki/John_Collison" target="_blank" rel="noopener noreferrer">
+              Learn more about John
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg>
+            </a>
           </div>
         </article>
       </div>
@@ -761,6 +967,27 @@
         </div>
       </div>
       <p class="reveal" style="font-size:14px; color:var(--text-dim); margin-top:10px;">Stripe fee: <strong style="color:var(--violet-bright)">~2.9% + 30¢</strong> per successful transaction.</p>
+
+      <div class="fee-calc glass reveal">
+        <div class="fee-calc-head">
+          <span class="fee-calc-title">🧮 Try it — drag to set a <strong>sale amount</strong></span>
+        </div>
+        <input type="range" id="feeSlider" min="10" max="5000" step="10" value="100" aria-label="Sale amount in dollars">
+        <div class="fee-calc-amounts">
+          <div>
+            <span class="fee-lbl">Customer Pays</span>
+            <span class="fee-val" id="feeGross">$100.00</span>
+          </div>
+          <div>
+            <span class="fee-lbl">Stripe Fee (2.9% + 30¢)</span>
+            <span class="fee-val fee-cut" id="feeCut">$3.20</span>
+          </div>
+          <div>
+            <span class="fee-lbl">Business Receives</span>
+            <span class="fee-val fee-net" id="feeNet">$96.80</span>
+          </div>
+        </div>
+      </div>
 
       <div class="grid-2">
         <div class="card reveal">
@@ -866,33 +1093,111 @@
       themeBtn.textContent = next === 'dark' ? '☀️ Light' : '🌙 Dark';
     });
 
-    // Reveal
-    const reveals = $$('.reveal');
-    const revealObs = new IntersectionObserver((entries)=>{
-      entries.forEach((e,i)=>{
-        if(e.isIntersecting){
-          setTimeout(()=>e.target.classList.add('in'), (i%7)*50);
-          revealObs.unobserve(e.target);
-        }
-      });
-    }, {threshold:.14});
-    reveals.forEach(el=>revealObs.observe(el));
-
-    // Active TOC
+    /* ============================================
+       TAB SYSTEM — only the clicked section shows
+       ============================================ */
     const sections = $$('.section');
     const tocLinks = $$('#toc a');
-    const tocObs = new IntersectionObserver((entries)=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting){
-          tocLinks.forEach(a=>a.classList.remove('active'));
-          const link = $(`#toc a[data-target="${entry.target.id}"]`);
-          if(link) link.classList.add('active');
-        }
-      });
-    }, {rootMargin:'-40% 0px -50% 0px'});
-    sections.forEach(s=>tocObs.observe(s));
 
-    // KPI counter
+    function revealChildren(container){
+      container.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+    }
+
+    // Hero elements (stat cards, etc.) live outside the tab sections,
+    // so they never get revealed by showSection() — reveal them immediately.
+    document.querySelectorAll('header.hero .reveal').forEach(el => el.classList.add('in'));
+
+    /* ============================================
+       TYPEWRITER — hero tagline types itself out
+       ============================================ */
+    (function typewriter(){
+      const target = $('#heroTypeTarget');
+      if(!target) return;
+      const full = 'dev/payments · founded 2010 · fintech encyclopedia entry';
+      let i = 0;
+      function tick(){
+        target.textContent = full.slice(0, i);
+        i++;
+        if(i <= full.length){
+          setTimeout(tick, 28);
+        }
+      }
+      tick();
+    })();
+
+    /* ============================================
+       FEE CALCULATOR — live Stripe fee math
+       ============================================ */
+    (function feeCalculator(){
+      const slider = $('#feeSlider');
+      if(!slider) return;
+      const grossEl = $('#feeGross');
+      const cutEl = $('#feeCut');
+      const netEl = $('#feeNet');
+      function fmt(n){ return '$' + n.toFixed(2); }
+      function update(){
+        const gross = parseFloat(slider.value);
+        const cut = gross * 0.029 + 0.30;
+        const net = gross - cut;
+        grossEl.textContent = fmt(gross);
+        cutEl.textContent = fmt(cut);
+        netEl.textContent = fmt(net);
+      }
+      slider.addEventListener('input', update);
+      update();
+    })();
+
+    /* ============================================
+       BEFORE / AFTER STRIPE TOGGLE
+       ============================================ */
+    (function beforeAfterToggle(){
+      const btn = $('#tvnSwitch');
+      if(!btn) return;
+      const before = $('#tvnBefore');
+      const after = $('#tvnAfter');
+      const lblBefore = $('#tvnLabelBefore');
+      const lblAfter = $('#tvnLabelAfter');
+      btn.addEventListener('click', () => {
+        const isAfter = btn.getAttribute('aria-checked') === 'true';
+        const next = !isAfter;
+        btn.setAttribute('aria-checked', String(next));
+        before.classList.toggle('active', !next);
+        after.classList.toggle('active', next);
+        lblBefore.classList.toggle('active', !next);
+        lblAfter.classList.toggle('active', next);
+      });
+    })();
+
+    function showSection(id){
+      sections.forEach(s => s.classList.remove('active-tab'));
+      const target = document.getElementById(id);
+      if(target){
+        target.classList.add('active-tab');
+        revealChildren(target);
+      }
+      tocLinks.forEach(a => a.classList.toggle('active', a.dataset.target === id));
+
+      // scroll smoothly to the top of the section (below sticky nav)
+      const y = target.getBoundingClientRect().top + window.pageYOffset - 90;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+
+      // update the URL hash without jumping (nice for sharing a direct link)
+      history.replaceState(null, '', '#' + id);
+    }
+
+    tocLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        showSection(link.dataset.target);
+      });
+    });
+
+    // On load: open whichever section matches the URL hash, else default to "friction"
+    const initial = (location.hash || '#friction').replace('#','');
+    const validIds = sections.map(s => s.id);
+    showSection(validIds.includes(initial) ? initial : 'friction');
+
+    // KPI counter (runs once, for the always-visible hero stats)
     function animateCount(el){
       const target = parseFloat(el.dataset.count || 0);
       const prefix = el.dataset.prefix || '';
